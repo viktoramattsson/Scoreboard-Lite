@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PrimaryButton from './PrimaryButton';
 
 function TotalScores({ playerNames, totalScores, onClose, gameMode }) {
@@ -17,18 +17,53 @@ function TotalScores({ playerNames, totalScores, onClose, gameMode }) {
     }
   });
 
+  // Reverse the sorted array to start revealing from the last position
+  const reversedPlayersWithScores = [...playersWithScores].reverse();
+
+  const [revealCount, setRevealCount] = useState(0);
+
+  const handleReveal = () => {
+    if (revealCount < reversedPlayersWithScores.length) {
+      setRevealCount(revealCount + 1);
+    }
+  };
+
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-blue-300 bg-opacity-90 p-10 z-50">
-      <div className="bg-white p-12 rounded-lg shadow-lg">
-        <h2 className="text-xl font-bold mb-4">Total Scores</h2>
-        <ul className="mb-4">
-          {playersWithScores.map((player, index) => (
-            <li key={index} className="mb-2">
-              {player.name}: {player.score}
-            </li>
-          ))}
-        </ul>
-        <PrimaryButton text="Close" onClick={onClose} />
+    <div
+      className="fixed inset-0 flex items-center justify-center bg-gradient-to-r from-purple-800 via-blue-700 to-indigo-900 bg-opacity-90 p-10 z-50"
+      onClick={handleReveal}
+    >
+      <div
+        className="relative w-full max-w-md p-8 bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 border border-purple-900 rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-500"
+        onClick={(e) => e.stopPropagation()} // Prevents triggering reveal when clicking inside the modal
+      >
+        <div className="absolute -top-4 left-4 bg-gradient-to-r from-purple-800 via-blue-700 to-indigo-900 px-3 py-1 rounded-full shadow-lg">
+          <h2 className="text-center text-white font-bold">Total Scores</h2>
+        </div>
+        <div className="mb-4 mt-6 text-center">
+          {revealCount === 0 ? (
+            <p className="text-white text-lg">Tap to reveal results</p>
+          ) : (
+            <ul>
+              {revealCount > 0 &&
+                reversedPlayersWithScores
+                  .slice(0, revealCount)
+                  .reverse()
+                  .map((player, index) => (
+                    <li
+                      key={index}
+                      className="mb-2 p-2 bg-gradient-to-r from-white to-gray-300 rounded-lg text-black shadow-lg transform hover:scale-105 transition-transform duration-300"
+                    >
+                      <span className="font-bold text-lg">
+                        {playerNames.length - (revealCount - 1 - index)}.
+                      </span>{' '}
+                      {player.name}: {player.score}
+                    </li>
+                  ))}
+            </ul>
+          )}
+        </div>
+        <PrimaryButton text="Close" onClick={onClose} className="mt-2" />
       </div>
     </div>
   );

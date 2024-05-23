@@ -33,8 +33,8 @@ function PlayerNamesInput({ onSubmit }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-between bg-gradient-to-r from-purple-800 via-blue-700 to-indigo-900 p-6 space-y-6">
-      <div className="relative w-full max-w-md p-4 pt-8 bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 border border-purple-900 rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-500">
+    <div className="fixed inset-0 flex flex-col justify-between bg-gradient-to-r from-purple-800 via-blue-700 to-indigo-900 p-6 z-50">
+      <div className="relative w-full max-w-md mx-auto p-4 pt-10 mb-4 bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 border border-purple-900 rounded-xl shadow-2xl">
         <div className="absolute -top-4 left-4 bg-gradient-to-r from-purple-800 via-blue-700 to-indigo-900 px-3 py-1 rounded-full shadow-lg">
           <h1 className="text-center text-white font-bold">Players</h1>
         </div>
@@ -56,7 +56,7 @@ function PlayerNamesInput({ onSubmit }) {
           />
         </div>
       </div>
-      <div className="relative w-full max-w-md p-4 pt-8 bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 border border-purple-900 rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-500">
+      <div className="relative w-full max-w-md mx-auto p-4 pt-10 mb-4 bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 border border-purple-900 rounded-xl shadow-2xl">
         <div className="absolute -top-4 left-4 bg-gradient-to-r from-purple-800 via-blue-700 to-indigo-900 px-3 py-1 rounded-full shadow-lg">
           <h2 className="text-white font-bold">Game mode</h2>
         </div>
@@ -93,12 +93,14 @@ function PlayerNamesInput({ onSubmit }) {
           </button>
         </div>
       </div>
-      <button
-        className="p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl transform hover:scale-105 transition-transform duration-500"
-        onClick={handleSubmit}
-      >
-        Start!
-      </button>
+      <div className="w-full max-w-md mx-auto mb-4">
+        <button
+          className="p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-full shadow-2xl transform hover:scale-105 transition-transform duration-500"
+          onClick={handleSubmit}
+        >
+          Start!
+        </button>
+      </div>
     </div>
   );
 }

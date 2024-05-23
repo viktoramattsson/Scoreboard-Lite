@@ -128,9 +128,9 @@ function PlayRounds() {
     return null;
   }
 
-  if (playerNames.length > 0) {
-    const totalScores = calculateTotalScores();
+  const totalScores = calculateTotalScores();
 
+  if (playerNames.length > 0) {
     return (
       <div className="p-6">
         <div className="flex space-x-10">
