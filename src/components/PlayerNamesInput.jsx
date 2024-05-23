@@ -17,6 +17,8 @@ function PlayerNamesInput({ onSubmit }) {
   const handleSubmit = () => {
     const validNames = currentNames.filter((name) => name.trim() !== '');
     if (validNames.length > 0) {
+      localStorage.setItem('playerNames', JSON.stringify(validNames)); // Save to localStorage
+      console.log('Saved player names to localStorage:', validNames); // Debug log
       onSubmit(validNames);
       setCurrentNames(['']);
     }
