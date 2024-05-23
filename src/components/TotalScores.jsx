@@ -1,16 +1,16 @@
 import React from 'react';
 import PrimaryButton from './PrimaryButton';
 
-function TotalScores({ playerNames, totalScores, onClose, highestWin }) {
+function TotalScores({ playerNames, totalScores, onClose, gameMode }) {
   // Kombinera spelarnamn och deras totala poäng i en array
   const playersWithScores = playerNames.map((name, index) => ({
     name,
     score: totalScores[index],
   }));
 
-  // Sortera arrayen baserat på highestWin flaggan
+  // Sortera arrayen baserat på gameMode
   playersWithScores.sort((a, b) => {
-    if (highestWin) {
+    if (gameMode === 'highest') {
       return b.score - a.score; // Högst poäng först
     } else {
       return a.score - b.score; // Lägst poäng först

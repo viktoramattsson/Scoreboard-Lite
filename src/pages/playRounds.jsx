@@ -9,7 +9,7 @@ function PlayRounds() {
   const [scores, setScores] = useState([]);
   const [currentRound, setCurrentRound] = useState(1);
   const [showTotalScores, setShowTotalScores] = useState(false);
-  const [highestWin, setHighestWin] = useState(false);
+  const [gameMode, setGameMode] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false); // Track if localStorage data is loaded
   const router = useRouter();
 
@@ -18,10 +18,12 @@ function PlayRounds() {
       const savedPlayerNames = localStorage.getItem('playerNames');
       const savedScores = localStorage.getItem('scores');
       const savedCurrentRound = localStorage.getItem('currentRound');
+      const savedGameMode = localStorage.getItem('gameMode');
 
       console.log('Loaded player names from localStorage:', savedPlayerNames);
       console.log('Loaded scores from localStorage:', savedScores);
       console.log('Loaded current round from localStorage:', savedCurrentRound);
+      console.log('Loaded game mode from localStorage:', savedGameMode);
 
       if (savedPlayerNames) {
         const parsedNames = JSON.parse(savedPlayerNames);
@@ -39,6 +41,10 @@ function PlayRounds() {
 
       if (savedCurrentRound) {
         setCurrentRound(JSON.parse(savedCurrentRound));
+      }
+
+      if (savedGameMode) {
+        setGameMode(savedGameMode);
       }
 
       setIsLoaded(true);
@@ -59,11 +65,14 @@ function PlayRounds() {
     }
   }, [currentRound, isLoaded]);
 
-  const handlePlayerNamesSubmit = (names) => {
+  const handlePlayerNamesSubmit = (names, gameMode) => {
     setPlayerNames(names);
     setScores(names.map(() => [])); // Initialize scores array
+    setGameMode(gameMode);
     localStorage.setItem('playerNames', JSON.stringify(names)); // Save to localStorage
+    localStorage.setItem('gameMode', gameMode); // Save game mode to localStorage
     console.log('Saved player names to localStorage:', names);
+    console.log('Saved game mode to localStorage:', gameMode);
   };
 
   const handleScoreChange = (playerIndex, value) => {
@@ -75,7 +84,9 @@ function PlayRounds() {
   };
 
   const handleNextRound = () => {
-    setCurrentRound((prevRound) => prevRound + 1);
+    if (canProceedToNextRound()) {
+      setCurrentRound((prevRound) => prevRound + 1);
+    }
   };
 
   const handlePreviousRound = () => {
@@ -96,12 +107,19 @@ function PlayRounds() {
     localStorage.removeItem('playerNames');
     localStorage.removeItem('scores');
     localStorage.removeItem('currentRound');
+    localStorage.removeItem('gameMode');
     router.push('/');
   };
 
   const calculateTotalScores = () => {
     return scores.map((playerScores) =>
       playerScores.reduce((total, score) => total + (parseInt(score) || 0), 0)
+    );
+  };
+
+  const canProceedToNextRound = () => {
+    return playerNames.every(
+      (_, index) => scores[index] && scores[index][currentRound - 1]
     );
   };
 
@@ -120,7 +138,9 @@ function PlayRounds() {
             Previous
           </button>
           <h1>Round {currentRound}</h1>
-          <button onClick={handleNextRound}>Next</button>
+          <button onClick={handleNextRound} disabled={!canProceedToNextRound()}>
+            Next
+          </button>
         </div>
         <table>
           <thead>
@@ -155,7 +175,7 @@ function PlayRounds() {
             playerNames={playerNames}
             totalScores={totalScores}
             onClose={handleCloseTotalScores}
-            highestWin={highestWin}
+            gameMode={gameMode}
           />
         )}
         <PrimaryButton text="End game" onClick={handleEndGame} />
