@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import PlayerNamesInput from '../components/PlayerNamesInput';
 import TotalScores from '../components/TotalScores';
 import PrimaryButton from '../components/PrimaryButton';
@@ -10,11 +11,18 @@ function PlayRounds() {
   const [showTotalScores, setShowTotalScores] = useState(false);
   const [highestWin, setHighestWin] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false); // Track if localStorage data is loaded
+  const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const savedPlayerNames = localStorage.getItem('playerNames');
+      const savedScores = localStorage.getItem('scores');
+      const savedCurrentRound = localStorage.getItem('currentRound');
+
       console.log('Loaded player names from localStorage:', savedPlayerNames);
+      console.log('Loaded scores from localStorage:', savedScores);
+      console.log('Loaded current round from localStorage:', savedCurrentRound);
+
       if (savedPlayerNames) {
         const parsedNames = JSON.parse(savedPlayerNames);
         console.log('Parsed player names:', parsedNames);
@@ -23,9 +31,33 @@ function PlayRounds() {
           setScores(parsedNames.map(() => [])); // Initialize scores array
         }
       }
+
+      if (savedScores) {
+        const parsedScores = JSON.parse(savedScores);
+        setScores(parsedScores);
+      }
+
+      if (savedCurrentRound) {
+        setCurrentRound(JSON.parse(savedCurrentRound));
+      }
+
       setIsLoaded(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (isLoaded) {
+      localStorage.setItem('scores', JSON.stringify(scores));
+      console.log('Saved scores to localStorage:', scores);
+    }
+  }, [scores, isLoaded]);
+
+  useEffect(() => {
+    if (isLoaded) {
+      localStorage.setItem('currentRound', JSON.stringify(currentRound));
+      console.log('Saved current round to localStorage:', currentRound);
+    }
+  }, [currentRound, isLoaded]);
 
   const handlePlayerNamesSubmit = (names) => {
     setPlayerNames(names);
@@ -58,6 +90,13 @@ function PlayRounds() {
 
   const handleCloseTotalScores = () => {
     setShowTotalScores(false);
+  };
+
+  const handleEndGame = () => {
+    localStorage.removeItem('playerNames');
+    localStorage.removeItem('scores');
+    localStorage.removeItem('currentRound');
+    router.push('/');
   };
 
   const calculateTotalScores = () => {
@@ -98,7 +137,11 @@ function PlayRounds() {
                   <input
                     type="text"
                     placeholder="Enter Score"
-                    value={scores[index][currentRound - 1] || ''}
+                    value={
+                      scores[index] && scores[index][currentRound - 1]
+                        ? scores[index][currentRound - 1]
+                        : ''
+                    }
                     onChange={(e) => handleScoreChange(index, e.target.value)}
                   />
                 </td>
@@ -115,6 +158,7 @@ function PlayRounds() {
             highestWin={highestWin}
           />
         )}
+        <PrimaryButton text="End game" onClick={handleEndGame} />
       </div>
     );
   } else {
