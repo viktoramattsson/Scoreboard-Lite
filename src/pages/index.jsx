@@ -1,9 +1,22 @@
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Inter } from 'next/font/google';
+import db from '../db';
 
-const inter = Inter({ subsets: ['latin'] });
+const Home = () => {
+  const [savedGames, setSavedGames] = useState([]);
+  const [showSavedGames, setShowSavedGames] = useState(false);
 
-export default function Home() {
+  useEffect(() => {
+    if (showSavedGames) {
+      const fetchSavedGames = async () => {
+        const games = await db.games.toArray();
+        setSavedGames(games);
+      };
+
+      fetchSavedGames();
+    }
+  }, [showSavedGames]);
+
   return (
     <>
       <div>
@@ -18,7 +31,27 @@ export default function Home() {
             <Link href="/">About Us</Link>
           </li>
         </ul>
+        <button
+          className="p-2 bg-blue-500 text-white rounded-lg mt-4"
+          onClick={() => setShowSavedGames(!showSavedGames)}
+        >
+          Saved Games
+        </button>
+        {showSavedGames && (
+          <div className="mt-4 p-4 bg-gray-100 rounded-lg">
+            <h2 className="text-lg font-bold mb-2">Saved Games</h2>
+            <ul>
+              {savedGames.map((game) => (
+                <li key={game.id} className="mb-1">
+                  {game.gameName}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </>
   );
-}
+};
+
+export default Home;

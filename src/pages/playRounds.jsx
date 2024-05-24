@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import PlayerNamesInput from '../components/PlayerNamesInput';
 import TotalScores from '../components/TotalScores';
-import PrimaryButton from '../components/PrimaryButton';
+import Modal from '../components/Modal';
+import db from '../db';
 
 function PlayRounds() {
   const [playerNames, setPlayerNames] = useState([]);
@@ -10,7 +11,9 @@ function PlayRounds() {
   const [currentRound, setCurrentRound] = useState(1);
   const [showTotalScores, setShowTotalScores] = useState(false);
   const [gameMode, setGameMode] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false); // Track if localStorage data is loaded
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [gameName, setGameName] = useState('');
   const router = useRouter();
 
   useEffect(() => {
@@ -111,6 +114,26 @@ function PlayRounds() {
     router.push('/');
   };
 
+  const handleSaveGame = async () => {
+    setIsModalOpen(true);
+  };
+
+  const handleSave = async () => {
+    try {
+      await db.games.add({
+        name: gameName,
+        playerNames,
+        scores,
+        currentRound,
+        gameMode,
+      });
+      console.log('Game saved to IndexedDB');
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error('Failed to save game:', error);
+    }
+  };
+
   const calculateTotalScores = () => {
     return scores.map((playerScores) =>
       playerScores.reduce((total, score) => total + (parseInt(score) || 0), 0)
@@ -134,11 +157,19 @@ function PlayRounds() {
     return (
       <div className="p-6">
         <div className="flex space-x-10">
-          <button onClick={handlePreviousRound} disabled={currentRound === 1}>
+          <button
+            className="p-2 bg-blue-500 text-white rounded-lg"
+            onClick={handlePreviousRound}
+            disabled={currentRound === 1}
+          >
             Previous
           </button>
           <h1>Round {currentRound}</h1>
-          <button onClick={handleNextRound} disabled={!canProceedToNextRound()}>
+          <button
+            className="p-2 bg-blue-500 text-white rounded-lg"
+            onClick={handleNextRound}
+            disabled={!canProceedToNextRound()}
+          >
             Next
           </button>
         </div>
@@ -169,7 +200,12 @@ function PlayRounds() {
             ))}
           </tbody>
         </table>
-        <PrimaryButton text="Results" onClick={handleShowTotalScores} />
+        <button
+          className="p-2 bg-blue-500 text-white rounded-lg mt-4"
+          onClick={handleShowTotalScores}
+        >
+          Results
+        </button>
         {showTotalScores && (
           <TotalScores
             playerNames={playerNames}
@@ -178,7 +214,25 @@ function PlayRounds() {
             gameMode={gameMode}
           />
         )}
-        <PrimaryButton text="End game" onClick={handleEndGame} />
+        <button
+          className="p-2 bg-green-500 text-white rounded-lg mt-4"
+          onClick={handleSaveGame}
+        >
+          Save Game
+        </button>
+        <button
+          className="p-2 bg-red-500 text-white rounded-lg mt-4"
+          onClick={handleEndGame}
+        >
+          End game
+        </button>
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSave={handleSave}
+          gameName={gameName}
+          setGameName={setGameName}
+        />
       </div>
     );
   } else {
