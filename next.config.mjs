@@ -11,7 +11,8 @@ const nextConfig = {
   output: 'export',
   swcMinify: true,
   reactStrictMode: true,
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/Scoreboard-Lite/' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/Scoreboard-Lite/' : '', // Uppdatera med din repository namn
+  basePath: process.env.NODE_ENV === 'production' ? '/Scoreboard-Lite' : '',
   images: {
     loader: 'akamai',
     path: '',
