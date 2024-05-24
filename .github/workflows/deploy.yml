@@ -11,13 +11,11 @@ jobs:
     steps:
       - name: Check out the repository
         uses: actions/checkout@v3
-        with:
-          node-version: '20' # Explicitly set Node.js version
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.10.0' # Explicitly set Node.js version
+          node-version: '20.10.0'
 
       - name: Install dependencies
         run: npm install
