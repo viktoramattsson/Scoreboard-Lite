@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import PlayerNamesInput from '../components/PlayerNamesInput';
 import TotalScores from '../components/TotalScores';
-import Modal from '../components/Modal';
 import db from '../db';
 
 function PlayRounds() {
@@ -10,10 +9,10 @@ function PlayRounds() {
   const [scores, setScores] = useState([]);
   const [currentRound, setCurrentRound] = useState(1);
   const [showTotalScores, setShowTotalScores] = useState(false);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [title, setTitle] = useState('');
   const [gameMode, setGameMode] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [gameName, setGameName] = useState('');
+  const [isLoaded, setIsLoaded] = useState(false); // Track if localStorage data is loaded
   const router = useRouter();
 
   useEffect(() => {
@@ -114,26 +113,6 @@ function PlayRounds() {
     router.push('/');
   };
 
-  const handleSaveGame = async () => {
-    setIsModalOpen(true);
-  };
-
-  const handleSave = async () => {
-    try {
-      await db.games.add({
-        name: gameName,
-        playerNames,
-        scores,
-        currentRound,
-        gameMode,
-      });
-      console.log('Game saved to IndexedDB');
-      setIsModalOpen(false);
-    } catch (error) {
-      console.error('Failed to save game:', error);
-    }
-  };
-
   const calculateTotalScores = () => {
     return scores.map((playerScores) =>
       playerScores.reduce((total, score) => total + (parseInt(score) || 0), 0)
@@ -144,6 +123,17 @@ function PlayRounds() {
     return playerNames.every(
       (_, index) => scores[index] && scores[index][currentRound - 1]
     );
+  };
+
+  const handleSaveGame = async () => {
+    await db.games.add({
+      title,
+      playerNames,
+      scores,
+      currentRound,
+      gameMode,
+    });
+    setShowSaveModal(false);
   };
 
   if (!isLoaded) {
@@ -216,7 +206,7 @@ function PlayRounds() {
         )}
         <button
           className="p-2 bg-green-500 text-white rounded-lg mt-4"
-          onClick={handleSaveGame}
+          onClick={() => setShowSaveModal(true)}
         >
           Save Game
         </button>
@@ -226,13 +216,33 @@ function PlayRounds() {
         >
           End game
         </button>
-        <Modal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onSave={handleSave}
-          gameName={gameName}
-          setGameName={setGameName}
-        />
+
+        {showSaveModal && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg">
+              <h2 className="text-lg font-bold mb-4">Save Game</h2>
+              <input
+                type="text"
+                placeholder="Game Name"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="w-full p-2 mb-4 border rounded-lg"
+              />
+              <button
+                className="p-2 bg-blue-500 text-white rounded-lg"
+                onClick={handleSaveGame}
+              >
+                Save
+              </button>
+              <button
+                className="p-2 bg-gray-500 text-white rounded-lg mt-4"
+                onClick={() => setShowSaveModal(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     );
   } else {

@@ -7,12 +7,17 @@ const Home = () => {
   const [showSavedGames, setShowSavedGames] = useState(false);
 
   useEffect(() => {
-    if (showSavedGames) {
-      const fetchSavedGames = async () => {
+    const fetchSavedGames = async () => {
+      try {
         const games = await db.games.toArray();
+        console.log('Fetched games:', games); // Debugging log
         setSavedGames(games);
-      };
+      } catch (error) {
+        console.error('Failed to fetch games:', error);
+      }
+    };
 
+    if (showSavedGames) {
       fetchSavedGames();
     }
   }, [showSavedGames]);
@@ -43,7 +48,7 @@ const Home = () => {
             <ul>
               {savedGames.map((game) => (
                 <li key={game.id} className="mb-1">
-                  {game.gameName}
+                  {game.title} spel
                 </li>
               ))}
             </ul>

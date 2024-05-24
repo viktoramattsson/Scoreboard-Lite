@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Modal = ({ isOpen, onClose, onSave, gameName, setGameName }) => {
+const Modal = ({ isOpen, onClose, onSave, title, setTitle }) => {
   if (!isOpen) return null;
 
   return (
@@ -10,8 +10,8 @@ const Modal = ({ isOpen, onClose, onSave, gameName, setGameName }) => {
         <input
           type="text"
           placeholder="Enter game name"
-          value={gameName}
-          onChange={(e) => setGameName(e.target.value)}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           className="w-full p-2 mb-4 border rounded-lg"
         />
         <div className="flex justify-end space-x-4">
