@@ -26,13 +26,6 @@ jobs:
       - name: List files in out directory
         run: ls -la ./out
 
-      - name: Clean up old deployment cache
-        run: |
-          git fetch --all
-          git reset --hard origin/gh-pages
-          git rm -rf *
-          git clean -fd
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
