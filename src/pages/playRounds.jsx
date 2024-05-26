@@ -176,7 +176,9 @@ function PlayRounds() {
                 <td>{name}</td>
                 <td>
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     placeholder="Enter Score"
                     value={
                       scores[index] && scores[index][currentRound - 1]
