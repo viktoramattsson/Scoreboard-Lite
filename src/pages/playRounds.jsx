@@ -12,7 +12,7 @@ function PlayRounds() {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [title, setTitle] = useState('');
   const [gameMode, setGameMode] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false); // Track if localStorage data is loaded
+  const [isLoaded, setIsLoaded] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -22,17 +22,11 @@ function PlayRounds() {
       const savedCurrentRound = localStorage.getItem('currentRound');
       const savedGameMode = localStorage.getItem('gameMode');
 
-      console.log('Loaded player names from localStorage:', savedPlayerNames);
-      console.log('Loaded scores from localStorage:', savedScores);
-      console.log('Loaded current round from localStorage:', savedCurrentRound);
-      console.log('Loaded game mode from localStorage:', savedGameMode);
-
       if (savedPlayerNames) {
         const parsedNames = JSON.parse(savedPlayerNames);
-        console.log('Parsed player names:', parsedNames);
         if (parsedNames.length > 0) {
           setPlayerNames(parsedNames);
-          setScores(parsedNames.map(() => [])); // Initialize scores array
+          setScores(parsedNames.map(() => []));
         }
       }
 
@@ -56,25 +50,21 @@ function PlayRounds() {
   useEffect(() => {
     if (isLoaded) {
       localStorage.setItem('scores', JSON.stringify(scores));
-      console.log('Saved scores to localStorage:', scores);
     }
   }, [scores, isLoaded]);
 
   useEffect(() => {
     if (isLoaded) {
       localStorage.setItem('currentRound', JSON.stringify(currentRound));
-      console.log('Saved current round to localStorage:', currentRound);
     }
   }, [currentRound, isLoaded]);
 
   const handlePlayerNamesSubmit = (names, gameMode) => {
     setPlayerNames(names);
-    setScores(names.map(() => [])); // Initialize scores array
+    setScores(names.map(() => []));
     setGameMode(gameMode);
-    localStorage.setItem('playerNames', JSON.stringify(names)); // Save to localStorage
-    localStorage.setItem('gameMode', gameMode); // Save game mode to localStorage
-    console.log('Saved player names to localStorage:', names);
-    console.log('Saved game mode to localStorage:', gameMode);
+    localStorage.setItem('playerNames', JSON.stringify(names));
+    localStorage.setItem('gameMode', gameMode);
   };
 
   const handleScoreChange = (playerIndex, value) => {
@@ -136,8 +126,14 @@ function PlayRounds() {
     setShowSaveModal(false);
   };
 
+  const handleKeyPress = (e) => {
+    const charCode = e.charCode;
+    if (charCode < 48 || charCode > 57) {
+      e.preventDefault();
+    }
+  };
+
   if (!isLoaded) {
-    // Render nothing or a loading spinner while loading data from localStorage
     return null;
   }
 
@@ -186,6 +182,7 @@ function PlayRounds() {
                         : ''
                     }
                     onChange={(e) => handleScoreChange(index, e.target.value)}
+                    onKeyPress={handleKeyPress}
                   />
                 </td>
               </tr>

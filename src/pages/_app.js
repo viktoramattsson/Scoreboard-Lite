@@ -25,7 +25,7 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>My awesome PWA app</title>
+        <title>Scoreboard Lite</title>
         <meta name="description" content="Best PWA app in the world!" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="mask-icon" href="/icons/mask-icon.svg" color="#FFFFFF" />
@@ -47,10 +47,10 @@ export default function App({ Component, pageProps }) {
           sizes="167x167"
           href="/icons/touch-icon-ipad-retina.png"
         />
-        <meta name="twitter:card" content="summary" />
+        {/* <meta name="twitter:card" content="summary" />
         <meta name="twitter:url" content="https://yourdomain.com" />
-        <meta name="twitter:title" content="My awesome PWA app" />
-        <meta name="twitter:description" content="Best PWA app in the world!" />
+        <meta name="twitter:title" content="Scoreboard Lite" />
+        <meta name="twitter:description" content="Simple scoreboard app for all kinds of games" />
         <meta name="twitter:image" content="/icons/twitter.png" />
         <meta name="twitter:creator" content="@DavidWShadow" />
         <meta property="og:type" content="website" />
@@ -58,7 +58,7 @@ export default function App({ Component, pageProps }) {
         <meta property="og:description" content="Best PWA app in the world!" />
         <meta property="og:site_name" content="My awesome PWA app" />
         <meta property="og:url" content="https://yourdomain.com" />
-        <meta property="og:image" content="/icons/og.png" />
+        <meta property="og:image" content="/icons/og.png" /> */}
         <link
           rel="apple-touch-startup-image"
           href="/images/apple_splash_2048.png"
