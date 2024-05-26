@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import db from '../db';
 import { FaTimes } from 'react-icons/fa';
-import { useRouter } from 'next/router'; // Importing useRouter from next/router
+import { useRouter } from 'next/router';
 
 const Home = () => {
   const [savedGames, setSavedGames] = useState([]);
   const [showSavedGames, setShowSavedGames] = useState(false);
-  const router = useRouter(); // Initializing router
+  const router = useRouter();
 
   useEffect(() => {
     const fetchSavedGames = async () => {
       try {
         const games = await db.games.toArray();
-        console.log('Fetched games:', games); // Debugging log
+
         setSavedGames(games);
       } catch (error) {
         console.error('Failed to fetch games:', error);
