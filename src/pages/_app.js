@@ -31,22 +31,22 @@ export default function App({ Component, pageProps }) {
         <link rel="mask-icon" href="/icons/mask-icon.svg" color="#FFFFFF" />
         <meta name="theme-color" content="#ffffff" />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/icons/touch-icon-iphone.png" />
-        <link
+        {/* <link rel="apple-touch-icon" href="/icons/touch-icon-iphone.png" /> */}
+        {/* <link
           rel="apple-touch-icon"
           sizes="152x152"
           href="/icons/touch-icon-ipad.png"
-        />
-        <link
+        /> */}
+        {/* <link
           rel="apple-touch-icon"
           sizes="180x180"
           href="/icons/touch-icon-iphone-retina.png"
-        />
-        <link
+        /> */}
+        {/* <link
           rel="apple-touch-icon"
           sizes="167x167"
           href="/icons/touch-icon-ipad-retina.png"
-        />
+        /> */}
         {/* <meta name="twitter:card" content="summary" />
         <meta name="twitter:url" content="https://yourdomain.com" />
         <meta name="twitter:title" content="Scoreboard Lite" />
@@ -59,7 +59,7 @@ export default function App({ Component, pageProps }) {
         <meta property="og:site_name" content="My awesome PWA app" />
         <meta property="og:url" content="https://yourdomain.com" />
         <meta property="og:image" content="/icons/og.png" /> */}
-        <link
+        {/* <link
           rel="apple-touch-startup-image"
           href="/images/apple_splash_2048.png"
           sizes="2048x2732"
@@ -93,7 +93,7 @@ export default function App({ Component, pageProps }) {
           rel="apple-touch-startup-image"
           href="/images/apple_splash_640.png"
           sizes="640x1136"
-        />
+        /> */}
       </Head>
       <Component {...pageProps} />
     </>
