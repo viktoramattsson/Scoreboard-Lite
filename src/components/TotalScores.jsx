@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PrimaryButton from './PrimaryButton';
 
 function TotalScores({ playerNames, totalScores, onClose, gameMode }) {
   // Kombinera spelarnamn och deras totala poäng i en array
@@ -35,9 +34,9 @@ function TotalScores({ playerNames, totalScores, onClose, gameMode }) {
     >
       <div
         className="relative w-full max-w-md p-8 bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 border border-purple-900 rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-500"
-        onClick={(e) => e.stopPropagation()} // Prevents triggering reveal when clicking inside the modal
+        // Prevents triggering reveal when clicking inside the modal
       >
-        <div className="absolute -top-4 left-4 bg-gradient-to-r from-purple-800 via-blue-700 to-indigo-900 px-3 py-1 rounded-full shadow-lg">
+        <div className="absolute -top-4 left-4 bg-gradient-to-r from-purple-800 via-blue-700 to-indigo-900 px-4 py-1 rounded-full shadow-lg">
           <h2 className="text-center text-white font-bold">Total Scores</h2>
         </div>
         <div className="mb-4 mt-6 text-center">
@@ -63,7 +62,12 @@ function TotalScores({ playerNames, totalScores, onClose, gameMode }) {
             </ul>
           )}
         </div>
-        <PrimaryButton text="Close" onClick={onClose} className="mt-2" />
+        <button
+          className="p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-2xl transition-transform duration-300 mt-2"
+          onClick={onClose}
+        >
+          Close
+        </button>
       </div>
     </div>
   );

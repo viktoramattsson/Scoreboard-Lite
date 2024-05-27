@@ -4,7 +4,8 @@ const withSerwist = withSerwistInit({
   swSrc: 'src/sw.js',
   swDest: 'public/sw.js',
   reloadOnOnline: true,
-  disable: process.env.NODE_ENV === 'development',
+  disable: false,
+  //disable: process.env.NODE_ENV === 'development',
 });
 
 const nextConfig = {

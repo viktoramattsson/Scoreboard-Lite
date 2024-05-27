@@ -141,41 +141,43 @@ function PlayRounds() {
 
   if (playerNames.length > 0) {
     return (
-      <div className="p-6">
-        <div className="flex space-x-10">
+      <div className="relative min-h-screen p-4 pt-10 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 mx-auto">
+        <div className="flex mt-6 justify-between">
           <button
-            className="p-2 bg-blue-500 text-white rounded-lg"
+            className="flex-1 p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white rounded-lg shadow-lg transition-transform duration-300 mx-1"
             onClick={handlePreviousRound}
             disabled={currentRound === 1}
           >
             Previous
           </button>
-          <h1>Round {currentRound}</h1>
+          <h1 className="flex-1 text-center text-white font-bold mx-1">
+            Round {currentRound}
+          </h1>
           <button
-            className="p-2 bg-blue-500 text-white rounded-lg"
+            className="flex-1 p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white rounded-lg shadow-lg transition-transform duration-300 mx-1"
             onClick={handleNextRound}
             disabled={!canProceedToNextRound()}
           >
             Next
           </button>
         </div>
-        <table>
+        <table className="w-full mt-6">
           <thead>
             <tr>
-              <th>Player Name</th>
-              <th>Score</th>
+              <th className="text-white text-left pl-4">Player Name</th>
+              <th className="text-white text-center">Score</th>
             </tr>
           </thead>
           <tbody>
             {playerNames.map((name, index) => (
-              <tr key={index}>
-                <td>{name}</td>
-                <td>
+              <tr key={index} className="text-white mb-4">
+                <td className="py-2 text-left pl-4">{name}</td>
+                <td className="text-center">
                   <input
                     type="text"
                     inputMode="numeric"
                     pattern="[0-9]*"
-                    placeholder="Enter Score"
+                    placeholder="Score"
                     value={
                       scores[index] && scores[index][currentRound - 1]
                         ? scores[index][currentRound - 1]
@@ -183,43 +185,46 @@ function PlayRounds() {
                     }
                     onChange={(e) => handleScoreChange(index, e.target.value)}
                     onKeyPress={handleKeyPress}
+                    className=" my-2 p-2 w-16 h-16 rounded-full bg-white text-black focus:outline-none focus:ring-4 focus:ring-red-500 shadow-lg transition-all duration-300 ease-in-out text-center"
                   />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <button
-          className="p-2 bg-blue-500 text-white rounded-lg mt-4"
-          onClick={handleShowTotalScores}
-        >
-          Results
-        </button>
-        {showTotalScores && (
-          <TotalScores
-            playerNames={playerNames}
-            totalScores={totalScores}
-            onClose={handleCloseTotalScores}
-            gameMode={gameMode}
-          />
-        )}
-        <button
-          className="p-2 bg-green-500 text-white rounded-lg mt-4"
-          onClick={() => setShowSaveModal(true)}
-        >
-          Save Game
-        </button>
-        <button
-          className="p-2 bg-red-500 text-white rounded-lg mt-4"
-          onClick={handleEndGame}
-        >
-          End game
-        </button>
+        <div className="flex justify-between mt-10 h-20">
+          <button
+            className="p-2 w-1/4 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-2xl transition-transform duration-300"
+            onClick={handleShowTotalScores}
+          >
+            Results
+          </button>
+          {showTotalScores && (
+            <TotalScores
+              playerNames={playerNames}
+              totalScores={totalScores}
+              onClose={handleCloseTotalScores}
+              gameMode={gameMode}
+            />
+          )}
+          <button
+            className="p-2 w-1/4 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-2xl transition-transform duration-300"
+            onClick={() => setShowSaveModal(true)}
+          >
+            Save Game
+          </button>
+          <button
+            className="p-2 w-1/4 bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white rounded-lg shadow-2xl transition-transform duration-300"
+            onClick={handleEndGame}
+          >
+            End game
+          </button>
+        </div>
 
         {showSaveModal && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg">
-              <h2 className="text-lg font-bold mb-4">Save Game</h2>
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
+            <div className="bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 p-6 rounded-lg shadow-lg relative w-4/5 max-w-80 min-h-[50%]">
+              <h2 className="text-lg font-bold mb-4 text-white">Save Game</h2>
               <input
                 type="text"
                 placeholder="Game Name"
@@ -228,13 +233,13 @@ function PlayRounds() {
                 className="w-full p-2 mb-4 border rounded-lg"
               />
               <button
-                className="p-2 bg-blue-500 text-white rounded-lg"
+                className="p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white rounded-lg shadow-lg transition-transform duration-300"
                 onClick={handleSaveGame}
               >
                 Save
               </button>
               <button
-                className="p-2 bg-gray-500 text-white rounded-lg mt-4"
+                className="p-2 bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white rounded-lg shadow-lg transition-transform duration-300 mt-4"
                 onClick={() => setShowSaveModal(false)}
               >
                 Cancel
