@@ -41,7 +41,7 @@
   ],
   "theme_color": "#FFFFFF",
   "background_color": "#FFFFFF",
-  "start_url": "/",
+  "start_url": "/Scoreboard-Lite/",
   "display": "standalone",
   "orientation": "portrait"
 }
