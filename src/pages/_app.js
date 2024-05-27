@@ -31,7 +31,7 @@ export default function App({ Component, pageProps }) {
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="mask-icon" href="/icons/mask-icon.svg" color="#FFFFFF" />
         <meta name="theme-color" content="#ffffff" />
-        <link rel="manifest" href="/Scoreboard-Lite/manifest.json" />
+        <link rel="manifest" href="/manifest.json" />
         <link
           rel="apple-touch-icon"
           sizes="57x57"
