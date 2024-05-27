@@ -13,13 +13,10 @@ const nextConfig = {
 
   swcMinify: true,
   reactStrictMode: true,
-  assetPrefix:
-    process.env.NODE_ENV === 'production'
-      ? 'https://viktoramattsson.github.io/Scoreboard-Lite/'
-      : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/Scoreboard-Lite/' : '',
   basePath:
     process.env.NODE_ENV === 'production'
-      ? '/https://viktoramattsson.github.io/Scoreboard-Lite'
+      ? 'https://viktoramattsson.github.io/Scoreboard-Lite'
       : '',
   images: {
     unoptimized: true,
