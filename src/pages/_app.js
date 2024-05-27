@@ -7,7 +7,7 @@ export default function App({ Component, pageProps }) {
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker
-          .register('/sw.js', { scope: '/Scoreboard-Lite/' })
+          .register('/Scoreboard-Lite/sw.js', { scope: '/Scoreboard-Lite/' })
 
           .then((registration) => {
             console.log(
