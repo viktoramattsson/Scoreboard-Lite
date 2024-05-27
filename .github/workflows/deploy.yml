@@ -56,10 +56,6 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
-      - name: List all files
-        run: ls -la
-      - name: List files in out directory
-        run: ls -la ./out
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
