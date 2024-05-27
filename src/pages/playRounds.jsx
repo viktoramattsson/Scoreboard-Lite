@@ -142,7 +142,7 @@ function PlayRounds() {
   if (playerNames.length > 0) {
     return (
       <div className="relative min-h-screen p-4 pt-10 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 mx-auto">
-        <div className="flex mt-6 h-16 justify-between">
+        <div className="flex mt-6 justify-between">
           <button
             className="flex-1 p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white rounded-lg shadow-lg transition-transform duration-300 mx-1"
             onClick={handlePreviousRound}
@@ -161,10 +161,10 @@ function PlayRounds() {
             Next
           </button>
         </div>
-        <table className="w-2/3 mt-10 mx-auto">
+        <table className="w-full mt-6">
           <thead>
             <tr>
-              <th className="text-white text-left pl-4">Player</th>
+              <th className="text-white text-left pl-4">Player Name</th>
               <th className="text-white text-center">Score</th>
             </tr>
           </thead>
