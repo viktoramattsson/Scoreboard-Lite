@@ -244,6 +244,12 @@ function PlayRounds() {
               >
                 Cancel
               </button>
+              <p>
+                <i>
+                  Note that saved data will disapear if browser cockies are
+                  removed
+                </i>
+              </p>
             </div>
           </div>
         )}

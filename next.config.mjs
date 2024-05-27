@@ -14,7 +14,8 @@ const nextConfig = {
   swcMinify: true,
   reactStrictMode: true,
   assetPrefix: process.env.NODE_ENV === 'production' ? '/Scoreboard-Lite/' : '',
-  basePath: process.env.NODE_ENV === 'production' ? '/Scoreboard-Lite' : '',
+  basePath: '/Scoreboard-Lite/',
+  //basePath: process.env.NODE_ENV === 'production' ? '/Scoreboard-Lite' : '',
   images: {
     unoptimized: true,
     loader: 'akamai',
