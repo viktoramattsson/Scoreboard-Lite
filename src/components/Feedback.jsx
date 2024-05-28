@@ -9,7 +9,7 @@ const Feedback = (props) => {
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60">
       <div className="relative w-full max-w-md p-4 pt-10 bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 border border-gray-500 rounded-xl">
         <div className="absolute top-2 right-2">
-          <button className="text-white text-xl" onClick={closeForm}>
+          <button className="text-white text-2xl" onClick={closeForm}>
             ×
           </button>
         </div>
@@ -48,6 +48,7 @@ const Feedback = (props) => {
           <button
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 rounded-full mt-4"
             type="submit"
+            onClick={closeForm}
           >
             Skicka
           </button>
