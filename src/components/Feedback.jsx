@@ -5,6 +5,32 @@ const Feedback = (props) => {
     props.closeIt();
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.target;
+
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+      method: form.method,
+      body: formData,
+      headers: {
+        Accept: 'application/json',
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          closeForm();
+        } else {
+          alert('There was an issue submitting the form');
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        alert('There was an issue submitting the form');
+      });
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60">
       <div className="relative w-full max-w-md p-4 pt-10 bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 border border-gray-500 rounded-xl">
@@ -23,6 +49,7 @@ const Feedback = (props) => {
           acceptCharset="UTF-8"
           encType="multipart/form-data"
           method="POST"
+          onSubmit={handleSubmit}
         >
           <input type="hidden" name="utf8" value="✓" />
           <label className="text-white mb-2" htmlFor="email-address">
@@ -48,7 +75,6 @@ const Feedback = (props) => {
           <button
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 rounded-full mt-4"
             type="submit"
-            onClick={closeForm}
           >
             Skicka
           </button>
