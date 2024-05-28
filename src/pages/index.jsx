@@ -1,6 +1,4 @@
-'use client';
-
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import db from '../db';
 import { FaTimes, FaTrash } from 'react-icons/fa';
@@ -14,6 +12,7 @@ const Home = () => {
   const [showFeedback, setShowFeedback] = useState(false);
   const [showInstallModal, setShowInstallModal] = useState(false);
   const [prompt, setPrompt] = useState(null);
+  const [browserNotSupported, setBrowserNotSupported] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -25,13 +24,28 @@ const Home = () => {
         setShowInstallModal(true);
       }
     };
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    if ('onbeforeinstallprompt' in window) {
+      window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    } else {
+      console.warn('PWA installation prompt is not supported in this browser.');
+      setBrowserNotSupported(true);
+    }
+
     return () => {
-      window.removeEventListener(
-        'beforeinstallprompt',
-        handleBeforeInstallPrompt
-      );
+      if ('onbeforeinstallprompt' in window) {
+        window.removeEventListener(
+          'beforeinstallprompt',
+          handleBeforeInstallPrompt
+        );
+      }
     };
+  }, []);
+
+  useEffect(() => {
+    if (navigator.userAgent.match(/(iPhone|iPad|iPod)/i)) {
+      setShowInstallModal(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -82,8 +96,11 @@ const Home = () => {
         setPrompt(null);
         setShowInstallModal(false);
       });
+    } else {
+      console.warn('PWA installation prompt is not available.');
     }
   };
+
   const handleCloseInstall = () => {
     setShowInstallModal(false);
   };
@@ -147,6 +164,7 @@ const Home = () => {
         </div>
       )}
       <InstallModal
+        notSupported={browserNotSupported}
         show={showInstallModal}
         onInstall={handleInstallClick}
         onClose={handleCloseInstall}
