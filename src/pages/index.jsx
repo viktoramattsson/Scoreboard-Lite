@@ -49,34 +49,33 @@ const Home = () => {
 
   return (
     <div className="flex flex-col justify-between min-h-screen p-6 bg-gradient-to-tr from-cyan-900 via-cyan-600 to-cyan-200">
-      <div className="relative w-full max-w-md p-4 pt-10 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 rounded-xl mt-10 mx-auto">
+      <div className="relative w-full max-w-md p-4 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 rounded-xl mt-10 mx-auto">
         <div className="absolute -top-4 left-4 bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-900 px-4 py-1 rounded-full shadow-lg">
           <h1 className="text-center text-white font-bold">Scoreboard Lite</h1>
         </div>
-        <ul className="mt-6 text-center">
-          <li className="mb-4">
-            <Link
-              href="/playRounds"
-              className="text-white bg-gradient-to-r from-green-500 via-green-600 to-green-900 p-2 rounded-lg shadow-lg transition-transform duration-300"
-            >
-              Play Rounds
-            </Link>
+        <ul className="my-10 text-center">
+          <li>
+            <button className="p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl mt-10 mb-4 self-center">
+              <Link href="/playRounds">Play Rounds</Link>
+            </button>
           </li>
           <li>
             <button
-              className="p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl transition-transform duration-300 mt-10 mb-4 self-center"
+              className="p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl mt-10 mb-4 self-center"
+              onClick={() => setShowSavedGames(!showSavedGames)}
+            >
+              Saved Games
+            </button>
+          </li>
+          <li>
+            <button
+              className="p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl mt-10 mb-4 self-center"
               onClick={() => setShowFeedback(!showFeedback)}
             >
               Feedback
             </button>
           </li>
         </ul>
-        <button
-          className="p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl transition-transform duration-300 mt-10 mb-4 self-center"
-          onClick={() => setShowSavedGames(!showSavedGames)}
-        >
-          Saved Games
-        </button>
       </div>
       {showFeedback && <Feedback closeIt={handleCloseFeedback} />}
       {showSavedGames && (

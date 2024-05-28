@@ -5,11 +5,11 @@ const Feedback = (props) => {
     props.closeIt();
   };
 
-  // const handleSubmit = (event) => {
-  //   setTimeout(() => {
-  //     closeForm();
-  //   }, 1000);
-  // };
+  const handleSubmit = (event) => {
+    setTimeout(() => {
+      closeForm();
+    }, 1000);
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60">
@@ -29,7 +29,7 @@ const Feedback = (props) => {
           acceptCharset="UTF-8"
           encType="multipart/form-data"
           method="POST"
-          // onSubmit={handleSubmit}
+          onSubmit={handleSubmit}
         >
           <input type="hidden" name="utf8" value="✓" />
           <label className="text-white mb-2" htmlFor="email-address">
@@ -55,7 +55,6 @@ const Feedback = (props) => {
           <button
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 rounded-full mt-4"
             type="submit"
-            onClick={closeForm}
           >
             Skicka
           </button>
