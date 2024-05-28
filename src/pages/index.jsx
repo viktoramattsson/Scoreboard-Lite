@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import db from '../db';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaTrash } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import Feedback from '../components/Feedback.jsx';
 
@@ -32,6 +32,15 @@ const Home = () => {
     localStorage.setItem('currentRound', game.currentRound);
     localStorage.setItem('gameMode', game.gameMode);
     router.push('/playRounds');
+  };
+
+  const handleDeleteGame = async (gameId) => {
+    try {
+      await db.games.delete(gameId);
+      setSavedGames(savedGames.filter((game) => game.id !== gameId));
+    } catch (error) {
+      console.error('Failed to delete game:', error);
+    }
   };
 
   const handleCloseFeedback = () => {
@@ -73,21 +82,25 @@ const Home = () => {
       {showSavedGames && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60">
           <div className="bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 p-6 rounded-lg shadow-lg relative w-4/5 max-w-80 min-h-[50%]">
-            <h2 className="text-lg font-bold mb-2">Saved Games</h2>
-            <ul>
+            <h2 className="text-lg font-bold mb-6">Saved Games</h2>
+            <ul className="w-full flex flex-col items-center">
               {savedGames.map((game) => (
-                <li key={game.id} className="mb-1">
+                <li key={game.id} className="flex items-center w-full mb-1">
                   <div
-                    className="bg-green-200 rounded-lg h-10 text-center flex items-center justify-center cursor-pointer"
+                    className="cursor-pointer flex-grow text-center bg-gradient-to-r from-green-500 via-green-600 to-green-700 rounded-lg h-10 p-2 flex items-center justify-center"
                     onClick={() => handleLoadGame(game)}
                   >
                     {game.title}
                   </div>
+                  <FaTrash
+                    className="text-red-600 cursor-pointer text-3xl ml-6 flex items-center"
+                    onClick={() => handleDeleteGame(game.id)}
+                  />
                 </li>
               ))}
             </ul>
             <FaTimes
-              className="absolute top-2 right-2 text-3xl cursor-pointer text-black"
+              className="absolute top-4 right-6 text-3xl cursor-pointer text-black"
               onClick={() => setShowSavedGames(false)}
             />
           </div>
