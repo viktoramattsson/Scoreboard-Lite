@@ -29,7 +29,7 @@ const Feedback = (props) => {
           acceptCharset="UTF-8"
           encType="multipart/form-data"
           method="POST"
-          onSubmit={handleSubmit}
+          // onSubmit={handleSubmit}
         >
           <input type="hidden" name="utf8" value="✓" />
           <label className="text-white mb-2" htmlFor="email-address">
