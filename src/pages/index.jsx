@@ -1,15 +1,38 @@
-import React, { useState, useEffect } from 'react';
+'use client';
+
+import React, { useState, useEffect, use } from 'react';
 import Link from 'next/link';
 import db from '../db';
 import { FaTimes, FaTrash } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import Feedback from '../components/Feedback.jsx';
+import InstallModal from '../components/InstallModal.jsx';
 
 const Home = () => {
   const [savedGames, setSavedGames] = useState([]);
   const [showSavedGames, setShowSavedGames] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [showInstallModal, setShowInstallModal] = useState(false);
+  const [prompt, setPrompt] = useState(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (event) => {
+      event.preventDefault();
+      setPrompt(event);
+
+      if (!window.matchMedia('(display-mode: standalone)').matches) {
+        setShowInstallModal(true);
+      }
+    };
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    return () => {
+      window.removeEventListener(
+        'beforeinstallprompt',
+        handleBeforeInstallPrompt
+      );
+    };
+  }, []);
 
   useEffect(() => {
     const fetchSavedGames = async () => {
@@ -45,6 +68,24 @@ const Home = () => {
 
   const handleCloseFeedback = () => {
     setShowFeedback(false);
+  };
+
+  const handleInstallClick = () => {
+    if (prompt) {
+      prompt.prompt();
+      prompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the A2HS prompt');
+        } else {
+          console.log('User dismissed the A2HS prompt');
+        }
+        setPrompt(null);
+        setShowInstallModal(false);
+      });
+    }
+  };
+  const handleCloseInstall = () => {
+    setShowInstallModal(false);
   };
 
   return (
@@ -105,6 +146,11 @@ const Home = () => {
           </div>
         </div>
       )}
+      <InstallModal
+        show={showInstallModal}
+        onInstall={handleInstallClick}
+        onClose={handleCloseInstall}
+      />
     </div>
   );
 };
