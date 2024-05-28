@@ -3,10 +3,12 @@ import Link from 'next/link';
 import db from '../db';
 import { FaTimes } from 'react-icons/fa';
 import { useRouter } from 'next/router';
+import Feedback from '../components/Feedback.jsx';
 
 const Home = () => {
   const [savedGames, setSavedGames] = useState([]);
   const [showSavedGames, setShowSavedGames] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -32,6 +34,10 @@ const Home = () => {
     router.push('/playRounds');
   };
 
+  const handleCloseFeedback = () => {
+    setShowFeedback(false);
+  };
+
   return (
     <div className="flex flex-col justify-between min-h-screen p-6 bg-gradient-to-tr from-cyan-900 via-cyan-600 to-cyan-200">
       <div className="relative w-full max-w-md p-4 pt-10 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 rounded-xl mt-10 mx-auto">
@@ -48,12 +54,12 @@ const Home = () => {
             </Link>
           </li>
           <li>
-            <Link
-              href="/"
-              className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-900 p-2 rounded-lg shadow-lg transition-transform duration-300"
+            <button
+              className="p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl transition-transform duration-300 mt-10 mb-4 self-center"
+              onClick={() => setShowFeedback(!showFeedback)}
             >
-              About Us
-            </Link>
+              Feedback
+            </button>
           </li>
         </ul>
         <button
@@ -63,6 +69,7 @@ const Home = () => {
           Saved Games
         </button>
       </div>
+      {showFeedback && <Feedback closeIt={handleCloseFeedback} />}
       {showSavedGames && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60">
           <div className="bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 p-6 rounded-lg shadow-lg relative w-4/5 max-w-80 min-h-[50%]">
