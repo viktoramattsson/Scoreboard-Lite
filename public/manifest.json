@@ -39,8 +39,8 @@
       "density": "4.0"
     }
   ],
-  "theme_color": "#FFFFFF",
-  "background_color": "#FFFFFF",
+  "theme_color": "#0891b2",
+  "background_color": "#0891b2",
   "start_url": "/Scoreboard-Lite/",
   "display": "standalone",
   "orientation": "portrait"
