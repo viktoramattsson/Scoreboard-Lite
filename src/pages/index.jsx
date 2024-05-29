@@ -21,7 +21,7 @@ const Home = () => {
       event.preventDefault();
       setPrompt(event);
 
-      // Show the install modal if not in standalone mode
+      // Only show install modal if not in standalone mode
       if (
         !window.matchMedia('(display-mode: standalone)').matches &&
         !window.navigator.standalone
@@ -35,7 +35,9 @@ const Home = () => {
     } else {
       console.log('PWA installation prompt is not supported in this browser.');
       setBrowserNotSupported(true);
-      setShowInstallModal(true);
+      if (!window.navigator.standalone) {
+        setShowInstallModal(true);
+      }
     }
 
     return () => {
@@ -52,10 +54,12 @@ const Home = () => {
     const isIosDevice = /iPhone|iPad|iPod/.test(navigator.userAgent);
     const isStandalone = window.navigator.standalone === true;
 
-    if (isIosDevice && !isStandalone) {
+    if (isIosDevice) {
       setIsIos(true);
-      setBrowserNotSupported(true);
-      setShowInstallModal(true);
+      if (!isStandalone) {
+        setBrowserNotSupported(true);
+        setShowInstallModal(true);
+      }
     }
   }, []);
 
