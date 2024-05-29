@@ -21,7 +21,11 @@ const Home = () => {
       event.preventDefault();
       setPrompt(event);
 
-      if (!window.matchMedia('(display-mode: standalone)').matches) {
+      // Show the install modal if not in standalone mode
+      if (
+        !window.matchMedia('(display-mode: standalone)').matches &&
+        !window.navigator.standalone
+      ) {
         setShowInstallModal(true);
       }
     };
@@ -45,10 +49,13 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (navigator.userAgent.match(/(iPhone|iPad|iPod)/i)) {
-      setShowInstallModal(true);
-      setBrowserNotSupported(true);
+    const isIosDevice = /iPhone|iPad|iPod/.test(navigator.userAgent);
+    const isStandalone = window.navigator.standalone === true;
+
+    if (isIosDevice && !isStandalone) {
       setIsIos(true);
+      setBrowserNotSupported(true);
+      setShowInstallModal(true);
     }
   }, []);
 
