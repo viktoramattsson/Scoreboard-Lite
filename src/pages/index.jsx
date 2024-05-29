@@ -21,10 +21,11 @@ const Home = () => {
       event.preventDefault();
       setPrompt(event);
 
-      // Only show install modal if not in standalone mode
+      // Only show install modal if not in standalone mode and user hasn't dismissed it
       if (
         !window.matchMedia('(display-mode: standalone)').matches &&
-        !window.navigator.standalone
+        !window.navigator.standalone &&
+        !localStorage.getItem('installDismissed')
       ) {
         setShowInstallModal(true);
       }
@@ -35,7 +36,10 @@ const Home = () => {
     } else {
       console.log('PWA installation prompt is not supported in this browser.');
       setBrowserNotSupported(true);
-      if (!window.navigator.standalone) {
+      if (
+        !window.navigator.standalone &&
+        !localStorage.getItem('installDismissed')
+      ) {
         setShowInstallModal(true);
       }
     }
@@ -56,7 +60,7 @@ const Home = () => {
 
     if (isIosDevice) {
       setIsIos(true);
-      if (!isStandalone) {
+      if (!isStandalone && !localStorage.getItem('installDismissed')) {
         setBrowserNotSupported(true);
         setShowInstallModal(true);
       }
@@ -117,6 +121,7 @@ const Home = () => {
   };
 
   const handleCloseInstall = () => {
+    localStorage.setItem('installDismissed', 'true'); // Save the user's choice in localStorage
     setShowInstallModal(false);
   };
 
@@ -128,13 +133,15 @@ const Home = () => {
         </div>
         <ul className="my-10 text-center">
           <li>
-            <button className="p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl mt-10 mb-4 self-center">
-              <Link href="/playRounds">Play Rounds</Link>
-            </button>
+            <Link href="/playRounds" passHref>
+              <div className="cursor-pointer flex items-center justify-center p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl mt-10 mb-4 mx-auto">
+                Play Rounds
+              </div>
+            </Link>
           </li>
           <li>
             <button
-              className="p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl mt-10 mb-4 self-center"
+              className="block p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl mt-10 mb-4 mx-auto"
               onClick={() => setShowSavedGames(!showSavedGames)}
             >
               Saved Games
@@ -142,7 +149,7 @@ const Home = () => {
           </li>
           <li>
             <button
-              className="p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl mt-10 mb-4 self-center"
+              className="block p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl mt-10 mb-4 mx-auto"
               onClick={() => setShowFeedback(!showFeedback)}
             >
               Feedback

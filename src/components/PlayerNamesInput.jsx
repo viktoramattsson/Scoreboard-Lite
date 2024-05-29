@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaTimes } from 'react-icons/fa';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 function PlayerNamesInput({ onSubmit }) {
   const [currentNames, setCurrentNames] = useState(['', '']); // Start with two fields
   const [selectedGameMode, setSelectedGameMode] = useState(null);
+  const router = useRouter();
 
   const handleInputChange = (index, value) => {
     setCurrentNames((prevNames) => {
@@ -32,9 +35,17 @@ function PlayerNamesInput({ onSubmit }) {
     setSelectedGameMode(mode);
   };
 
+  const handleCancel = () => {
+    router.push('/'); // Navigate back to the home page
+  };
+
   return (
     <div className="flex flex-col justify-between min-h-screen p-6 bg-gradient-to-tr from-cyan-900 via-cyan-600 to-cyan-200">
       <div className="relative w-full max-w-md p-4 pt-10 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 rounded-xl mt-10 mx-auto">
+        <FaTimes
+          className="absolute top-4 right-4 text-2xl text-white cursor-pointer"
+          onClick={handleCancel}
+        />
         <div className="absolute -top-4 left-4 bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-900 px-4 py-1 rounded-full shadow-lg">
           <h1 className="text-center text-white font-bold">Players</h1>
         </div>
