@@ -13,6 +13,7 @@ const Home = () => {
   const [showInstallModal, setShowInstallModal] = useState(false);
   const [prompt, setPrompt] = useState(null);
   const [browserNotSupported, setBrowserNotSupported] = useState(false);
+  const [isIos, setIsIos] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -28,8 +29,9 @@ const Home = () => {
     if ('onbeforeinstallprompt' in window) {
       window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     } else {
-      console.warn('PWA installation prompt is not supported in this browser.');
+      console.log('PWA installation prompt is not supported in this browser.');
       setBrowserNotSupported(true);
+      setShowInstallModal(true);
     }
 
     return () => {
@@ -45,6 +47,8 @@ const Home = () => {
   useEffect(() => {
     if (navigator.userAgent.match(/(iPhone|iPad|iPod)/i)) {
       setShowInstallModal(true);
+      setBrowserNotSupported(true);
+      setIsIos(true);
     }
   }, []);
 
@@ -164,6 +168,7 @@ const Home = () => {
         </div>
       )}
       <InstallModal
+        ios={isIos}
         notSupported={browserNotSupported}
         show={showInstallModal}
         onInstall={handleInstallClick}
