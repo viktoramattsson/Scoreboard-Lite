@@ -28,8 +28,22 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>Scoreboard Lite</title>
         <meta name="description" content="Best PWA app in the world!" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="mask-icon" href="/icons/mask-icon.svg" color="#FFFFFF" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
+        <link
+          rel="apple-touch-startup-image"
+          href="/Scoreboard-Lite/apple-icon.png"
+        />
+        <link rel="shortcut icon" href="/Scoreboard-Lite/favicon.ico" />
+        {/* <link rel="mask-icon" href="/Scoreboard-Lite/mask-icon.svg" color="#FFFFFF" /> */}
         <meta name="theme-color" content="#ffffff" />
         <link rel="manifest" href="/Scoreboard-Lite/manifest.json" />
         <link
