@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const InstallModal = ({ ios, notSupported, show, onClose, onInstall }) => {
+  useEffect(() => {
+    if (show) {
+      console.log('Showing installation modal');
+    }
+  }, [show]);
+
   return (
     <>
       {show && !notSupported && (
