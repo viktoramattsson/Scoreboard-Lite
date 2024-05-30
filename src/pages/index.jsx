@@ -159,9 +159,9 @@ const Home = () => {
             </Link>
           </motion.li>
           <motion.li
-            initial={{ x: -100, opacity: 0 }}
+            initial={{ x: 100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ type: 'spring', bounce: 0.8, duration: 0.5 }}
+            transition={{ type: 'spring', bounce: 0.8, duration: 0.8 }}
           >
             <button
               className="block p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl mt-10 mb-4 mx-auto"

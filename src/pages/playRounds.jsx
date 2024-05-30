@@ -144,7 +144,7 @@ function PlayRounds() {
   if (playerNames.length > 0) {
     return (
       <div className="min-h-screen flex flex-col bg-gradient-to-r from-blue to-purple-500">
-        <div className="max-w-md m-auto min-h-[600px] px-4 w-full flex flex-col">
+        <div className="max-w-md m-auto min-h-[500px] px-4 w-full flex flex-col">
           <div className="flex justify-between h-16">
             <button
               className="w-1/4 h-full p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white rounded-lg shadow-lg transition-transform duration-300 mx-1"

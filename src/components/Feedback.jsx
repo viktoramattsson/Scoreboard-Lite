@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaTimes } from 'react-icons/fa';
 
 const Feedback = (props) => {
   const closeForm = () => {
@@ -13,16 +14,16 @@ const Feedback = (props) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60">
-      <div className="relative w-full max-w-md p-4 pt-10 bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 border border-gray-500 rounded-xl">
-        <div className="absolute top-2 right-2">
+      <div className="relative w-5/6 max-w-md px-4 pb-10 pt-14 bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 border border-gray-500 rounded-xl">
+        <div className="absolute top-4 right-4">
           <button className="text-white text-2xl" onClick={closeForm}>
-            ×
+            <FaTimes />
           </button>
         </div>
         <h1 className="text-center text-white font-bold mb-6">
-          Please send your feedback
+          We would love to get your feedback!
         </h1>
-        <p className="text-white mb-4">We rely on it to improve the app</p>
+
         <form
           className="flex flex-col"
           action="https://formkeep.com/f/3ed93e7e8269"
@@ -33,7 +34,7 @@ const Feedback = (props) => {
         >
           <input type="hidden" name="utf8" value="✓" />
           <label className="text-white mb-2" htmlFor="email-address">
-            Email address
+            Email address (optional)
           </label>
           <input
             className="rounded-full mb-4 h-8 p-2"
@@ -46,17 +47,17 @@ const Feedback = (props) => {
             Feedback
           </label>
           <textarea
-            className="rounded-lg mb-4 p-2 h-32"
+            className="rounded-lg mb-4 p-2 h-48"
             id="feedback"
             name="feedback"
             rows="10"
           ></textarea>
 
           <button
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 rounded-full mt-4"
+            className=" bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white font-bold py-2 px-8 rounded-lg h-16 mt-4 shadow-2xl"
             type="submit"
           >
-            Skicka
+            Send
           </button>
         </form>
       </div>
