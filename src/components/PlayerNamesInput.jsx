@@ -40,7 +40,7 @@ function PlayerNamesInput({ onSubmit }) {
   };
 
   return (
-    <div className="flex flex-col justify-between min-h-screen p-6 bg-gradient-to-tr from-cyan-900 via-cyan-600 to-cyan-200">
+    <div className="flex flex-col justify-between min-h-screen p-6 bg-gradient-to-tr from-cyan-900 via-cyan-600 to-cyan-200 overflow-auto">
       <div className="relative w-full max-w-md p-4 pt-10 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 rounded-xl mt-10 mx-auto">
         <FaTimes
           className="absolute top-4 right-4 text-2xl text-white cursor-pointer"
@@ -49,17 +49,23 @@ function PlayerNamesInput({ onSubmit }) {
         <div className="absolute -top-4 left-4 bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-900 px-4 py-1 rounded-full shadow-lg">
           <h1 className="text-center text-white font-bold">Players</h1>
         </div>
-        {currentNames.map((name, index) => (
-          <div key={index} className="mb-4">
-            <input
-              className="w-full p-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-red-500 shadow-lg transition-all duration-300 ease-in-out"
-              type="text"
-              placeholder="Enter Player Name"
-              value={name}
-              onChange={(e) => handleInputChange(index, e.target.value)}
-            />
-          </div>
-        ))}
+        <div
+          className={`grid gap-4 ${
+            currentNames.length > 4 ? 'grid-cols-2' : 'grid-cols-1'
+          }`}
+        >
+          {currentNames.map((name, index) => (
+            <div key={index}>
+              <input
+                className="w-full p-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-red-500 shadow-lg transition-all duration-300 ease-in-out"
+                type="text"
+                placeholder="Enter Player Name"
+                value={name}
+                onChange={(e) => handleInputChange(index, e.target.value)}
+              />
+            </div>
+          ))}
+        </div>
         <div className="flex justify-center mt-2">
           <FaPlus
             className="text-3xl text-white cursor-pointer transition-colors duration-300"

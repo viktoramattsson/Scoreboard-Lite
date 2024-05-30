@@ -5,6 +5,7 @@ import { FaTimes, FaTrash } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import Feedback from '../components/Feedback.jsx';
 import InstallModal from '../components/InstallModal.jsx';
+import Image from 'next/image';
 
 const Home = () => {
   const [savedGames, setSavedGames] = useState([]);
@@ -21,7 +22,6 @@ const Home = () => {
       event.preventDefault();
       setPrompt(event);
 
-      // Only show install modal if not in standalone mode and user hasn't dismissed it
       if (
         !window.matchMedia('(display-mode: standalone)').matches &&
         !window.navigator.standalone &&
@@ -34,7 +34,7 @@ const Home = () => {
     if ('onbeforeinstallprompt' in window) {
       window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     } else {
-      console.log('PWA installation prompt is not supported in this browser.');
+      console.log('PWA installation prompt is not supported in browser.');
       setBrowserNotSupported(true);
       if (
         !window.navigator.standalone &&
@@ -126,12 +126,20 @@ const Home = () => {
   };
 
   return (
-    <div className="flex flex-col justify-between min-h-screen p-6 bg-gradient-to-tr from-cyan-900 via-cyan-600 to-cyan-200">
-      <div className="relative w-full max-w-md p-4 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 rounded-xl mt-10 mx-auto">
+    <div className="flex flex-col justify-between min-h-screen px-6 py-10 bg-gradient-to-tr from-cyan-900 via-cyan-600 to-cyan-200">
+      <div className="flex items-center justify-center">
+        <Image
+          src="logo.png"
+          alt="Scoreboard Lite Logo"
+          width={200}
+          height={200}
+        />
+      </div>
+      <div className="relative w-full max-w-md p-4 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 rounded-xl mx-auto">
         <div className="absolute -top-4 left-4 bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-900 px-4 py-1 rounded-full shadow-lg">
           <h1 className="text-center text-white font-bold">Scoreboard Lite</h1>
         </div>
-        <ul className="my-10 text-center">
+        <ul className="my-20 text-center">
           <li>
             <Link href="/playRounds" passHref>
               <div className="cursor-pointer flex items-center justify-center p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl mt-10 mb-4 mx-auto">
