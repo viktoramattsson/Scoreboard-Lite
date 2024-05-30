@@ -19,9 +19,6 @@ const nextConfig = {
     loader: 'akamai',
     path: '',
   },
-  rules: {
-    '@next/next/no-img-element': 'off',
-  },
 };
 
 export default withSerwist(nextConfig);
