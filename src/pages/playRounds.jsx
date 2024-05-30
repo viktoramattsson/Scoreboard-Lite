@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { motion } from 'framer-motion';
 import PlayerNamesInput from '../components/PlayerNamesInput';
 import TotalScores from '../components/TotalScores';
 import db from '../db';
@@ -14,6 +15,7 @@ function PlayRounds() {
   const [gameMode, setGameMode] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const router = useRouter();
+  const [focusedInput, setFocusedInput] = useState(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -141,60 +143,97 @@ function PlayRounds() {
 
   if (playerNames.length > 0) {
     return (
-      <div className="relative min-h-screen p-4 pt-10 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 mx-auto">
-        <div className="flex mt-6 justify-between">
+      <div className="relative min-h-screen flex flex-col justify-between px-4 py-12 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 mx-auto">
+        <div className="flex justify-between h-16">
           <button
-            className="flex-1 p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white rounded-lg shadow-lg transition-transform duration-300 mx-1"
+            className="w-1/4 h-full p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white rounded-lg shadow-lg transition-transform duration-300 mx-1"
             onClick={handlePreviousRound}
             disabled={currentRound === 1}
           >
             Previous
           </button>
-          <h1 className="flex-1 text-center text-white font-bold mx-1">
+          <h1 className="text-center text-white font-bold mx-1 flex-grow h-full flex items-center justify-center">
             Round {currentRound}
           </h1>
           <button
-            className="flex-1 p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white rounded-lg shadow-lg transition-transform duration-300 mx-1"
+            className="w-1/4 h-full p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white rounded-lg shadow-lg transition-transform duration-300 mx-1"
             onClick={handleNextRound}
             disabled={!canProceedToNextRound()}
           >
             Next
           </button>
         </div>
-        <table className="w-full mt-6">
-          <thead>
-            <tr>
-              <th className="text-white text-left pl-4">Player Name</th>
-              <th className="text-white text-center">Score</th>
-            </tr>
-          </thead>
-          <tbody>
-            {playerNames.map((name, index) => (
-              <tr key={index} className="text-white mb-4">
-                <td className="py-2 text-left pl-4">{name}</td>
-                <td className="text-center">
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    placeholder="Score"
-                    value={
-                      scores[index] && scores[index][currentRound - 1]
-                        ? scores[index][currentRound - 1]
-                        : ''
-                    }
-                    onChange={(e) => handleScoreChange(index, e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    className=" my-2 p-2 w-16 h-16 rounded-full bg-white text-black focus:outline-none focus:ring-4 focus:ring-red-500 shadow-lg transition-all duration-300 ease-in-out text-center"
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="flex justify-between mt-10 h-20">
+        <div
+          className="flex-grow flex items-center justify-center"
+          style={{ height: '80%' }}
+        >
+          <div className="w-full flex flex-col justify-between">
+            <table className="w-3/4 m-auto">
+              <tbody
+                className="flex flex-col justify-between"
+                style={{ height: '100%' }}
+              >
+                {playerNames.map((name, index) => (
+                  <tr
+                    key={index}
+                    className="text-white mb-4 flex justify-between items-center"
+                  >
+                    <td className="py-2 text-left text-2xl">{name}</td>
+
+                    <td className="text-center p-2">
+                      <motion.div
+                        animate={{
+                          scale:
+                            scores[index] && scores[index][currentRound - 1]
+                              ? 1
+                              : focusedInput === index
+                              ? 1
+                              : [1, 1.1, 1],
+                        }}
+                        transition={{
+                          duration: 1,
+                          repeat:
+                            scores[index] && scores[index][currentRound - 1]
+                              ? 0
+                              : focusedInput === index
+                              ? 0
+                              : Infinity,
+                          repeatType: 'loop',
+                        }}
+                      >
+                        <input
+                          type="text"
+                          inputMode="numeric"
+                          pattern="[0-9]*"
+                          placeholder="Score"
+                          value={
+                            scores[index] && scores[index][currentRound - 1]
+                              ? scores[index][currentRound - 1]
+                              : ''
+                          }
+                          onFocus={() => setFocusedInput(index)}
+                          onBlur={() => setFocusedInput(null)}
+                          onChange={(e) =>
+                            handleScoreChange(index, e.target.value)
+                          }
+                          onKeyPress={handleKeyPress}
+                          className={`w-20 h-14 rounded-full bg-white text-black focus:outline-none shadow-lg transition-all duration-300 ease-in-out text-center ${
+                            scores[index] && scores[index][currentRound - 1]
+                              ? 'border-4 border-green-500'
+                              : 'focus:ring-4 focus:ring-red-500'
+                          }`}
+                        />
+                      </motion.div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="flex justify-between mt-10 h-16">
           <button
-            className="p-2 w-1/4 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-2xl transition-transform duration-300"
+            className="p-2 w-1/4 h-full bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-2xl transition-transform duration-300"
             onClick={handleShowTotalScores}
           >
             Results
@@ -208,13 +247,13 @@ function PlayRounds() {
             />
           )}
           <button
-            className="p-2 w-1/4 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-2xl transition-transform duration-300"
+            className="p-2 w-1/4 h-full bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-2xl transition-transform duration-300"
             onClick={() => setShowSaveModal(true)}
           >
             Save Game
           </button>
           <button
-            className="p-2 w-1/4 bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white rounded-lg shadow-2xl transition-transform duration-300"
+            className="p-2 w-1/4 h-full bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white rounded-lg shadow-2xl transition-transform duration-300"
             onClick={handleEndGame}
           >
             End game
@@ -246,7 +285,7 @@ function PlayRounds() {
               </button>
               <p>
                 <i>
-                  Note that saved data will disapear if browser cockies are
+                  Note that saved data will disappear if browser cookies are
                   removed
                 </i>
               </p>
