@@ -134,7 +134,13 @@ const Home = () => {
         animate={{ rotate: 1080 }}
         transition={{ type: 'spring', bounce: 0.5, duration: 1 }}
       >
-        <img className="h-52 w-52" src="logo.png" alt="Scoreboard Lite Logo" />
+        {/* <img className="h-52 w-52" src="logo.png" alt="Scoreboard Lite Logo" /> */}
+        <Image
+          src="/logo.png"
+          alt="Scoreboard Lite Logo"
+          width={200}
+          height={200}
+        />
       </motion.div>
       <div className="relative w-full max-w-md p-4 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 rounded-xl mx-auto">
         <div className="absolute -top-4 left-4 bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-900 px-4 py-1 rounded-full shadow-lg">

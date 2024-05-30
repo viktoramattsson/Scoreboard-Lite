@@ -40,6 +40,7 @@ export default function App({ Component, pageProps }) {
           href="/Scoreboard-Lite/apple-icon.png"
         /> */}
         <link rel="shortcut icon" href="/Scoreboard-Lite/favicon.ico" />
+        <link rel="icon" href="/Scoreboard-Lite/logo.png" />
         <link
           rel="mask-icon"
           href="/Scoreboard-Lite/mask-icon.svg"
