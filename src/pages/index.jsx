@@ -129,17 +129,12 @@ const Home = () => {
   return (
     <div className="flex flex-col justify-between min-h-screen px-6 py-10 bg-gradient-to-tr from-cyan-900 via-cyan-600 to-cyan-200">
       <motion.div
-        className="flex items-center justify-center"
+        className="flex items-center justify-center mb-10"
         initial={{ rotate: 0 }}
         animate={{ rotate: 1080 }}
         transition={{ type: 'spring', bounce: 0.5, duration: 1 }}
       >
-        <Image
-          src="logo.png"
-          alt="Scoreboard Lite Logo"
-          width={200}
-          height={200}
-        />
+        <img className="h-52 w-52" src="logo.png" alt="Scoreboard Lite Logo" />
       </motion.div>
       <div className="relative w-full max-w-md p-4 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 rounded-xl mx-auto">
         <div className="absolute -top-4 left-4 bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-900 px-4 py-1 rounded-full shadow-lg">
