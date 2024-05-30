@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import Feedback from '../components/Feedback.jsx';
 import InstallModal from '../components/InstallModal.jsx';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const Home = () => {
   const [savedGames, setSavedGames] = useState([]);
@@ -127,42 +128,59 @@ const Home = () => {
 
   return (
     <div className="flex flex-col justify-between min-h-screen px-6 py-10 bg-gradient-to-tr from-cyan-900 via-cyan-600 to-cyan-200">
-      <div className="flex items-center justify-center">
+      <motion.div
+        className="flex items-center justify-center"
+        initial={{ rotate: 0 }}
+        animate={{ rotate: 1080 }}
+        transition={{ type: 'spring', bounce: 0.5, duration: 1 }}
+      >
         <Image
           src="logo.png"
           alt="Scoreboard Lite Logo"
           width={200}
           height={200}
         />
-      </div>
+      </motion.div>
       <div className="relative w-full max-w-md p-4 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 rounded-xl mx-auto">
         <div className="absolute -top-4 left-4 bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-900 px-4 py-1 rounded-full shadow-lg">
           <h1 className="text-center text-white font-bold">Scoreboard Lite</h1>
         </div>
         <ul className="my-20 text-center">
-          <li>
+          <motion.li
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ type: 'spring', bounce: 0.5, duration: 0.5 }}
+          >
             <Link href="/playRounds" passHref>
               <div className="cursor-pointer flex items-center justify-center p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl mt-10 mb-4 mx-auto">
                 Play Rounds
               </div>
             </Link>
-          </li>
-          <li>
+          </motion.li>
+          <motion.li
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ type: 'spring', bounce: 0.8, duration: 0.5 }}
+          >
             <button
               className="block p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl mt-10 mb-4 mx-auto"
               onClick={() => setShowSavedGames(!showSavedGames)}
             >
               Saved Games
             </button>
-          </li>
-          <li>
+          </motion.li>
+          <motion.li
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ type: 'spring', bounce: 0.8, duration: 1 }}
+          >
             <button
               className="block p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl mt-10 mb-4 mx-auto"
               onClick={() => setShowFeedback(!showFeedback)}
             >
               Feedback
             </button>
-          </li>
+          </motion.li>
         </ul>
       </div>
       {showFeedback && <Feedback closeIt={handleCloseFeedback} />}
@@ -172,7 +190,13 @@ const Home = () => {
             <h2 className="text-lg font-bold mb-6">Saved Games</h2>
             <ul className="w-full flex flex-col items-center">
               {savedGames.map((game) => (
-                <li key={game.id} className="flex items-center w-full mb-1">
+                <motion.li
+                  key={game.id}
+                  initial={{ x: -100, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ type: 'spring', bounce: 0.5, duration: 1.3 }}
+                  className="flex items-center w-full mb-1"
+                >
                   <div
                     className="cursor-pointer flex-grow text-center bg-gradient-to-r from-green-500 via-green-600 to-green-700 rounded-lg h-10 p-2 flex items-center justify-center"
                     onClick={() => handleLoadGame(game)}
@@ -183,7 +207,7 @@ const Home = () => {
                     className="text-red-600 cursor-pointer text-3xl ml-6 flex items-center"
                     onClick={() => handleDeleteGame(game.id)}
                   />
-                </li>
+                </motion.li>
               ))}
             </ul>
             <FaTimes
