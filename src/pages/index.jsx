@@ -136,7 +136,7 @@ const Home = () => {
       >
         {/* <img className="h-52 w-52" src="logo.png" alt="Scoreboard Lite Logo" /> */}
         <Image
-          src="logo.png"
+          src="/Scoreboard-Lite/logo.png"
           alt="Scoreboard Lite Logo"
           width={200}
           height={200}
