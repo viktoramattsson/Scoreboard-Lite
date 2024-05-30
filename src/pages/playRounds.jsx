@@ -143,155 +143,159 @@ function PlayRounds() {
 
   if (playerNames.length > 0) {
     return (
-      <div className="relative min-h-screen flex flex-col justify-between px-4 py-12 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 mx-auto">
-        <div className="flex justify-between h-16">
-          <button
-            className="w-1/4 h-full p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white rounded-lg shadow-lg transition-transform duration-300 mx-1"
-            onClick={handlePreviousRound}
-            disabled={currentRound === 1}
-          >
-            Previous
-          </button>
-          <h1 className="text-center text-white font-bold mx-1 flex-grow h-full flex items-center justify-center">
-            Round {currentRound}
-          </h1>
-          <button
-            className="w-1/4 h-full p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white rounded-lg shadow-lg transition-transform duration-300 mx-1"
-            onClick={handleNextRound}
-            disabled={!canProceedToNextRound()}
-          >
-            Next
-          </button>
-        </div>
-        <div
-          className="flex-grow flex items-center justify-center"
-          style={{ height: '80%' }}
-        >
-          <div className="w-full flex flex-col justify-between">
-            <table className="w-3/4 m-auto">
-              <tbody
-                className="flex flex-col justify-between"
-                style={{ height: '100%' }}
-              >
-                {playerNames.map((name, index) => (
-                  <tr
-                    key={index}
-                    className="text-white mb-4 flex justify-between items-center"
-                  >
-                    <td className="py-2 text-left text-2xl">{name}</td>
-
-                    <td className="text-center p-2">
-                      <motion.div
-                        animate={{
-                          scale:
-                            scores[index] && scores[index][currentRound - 1]
-                              ? 1
-                              : focusedInput === index
-                              ? 1
-                              : [1, 1.1, 1],
-                        }}
-                        transition={{
-                          duration: 1,
-                          repeat:
-                            scores[index] && scores[index][currentRound - 1]
-                              ? 0
-                              : focusedInput === index
-                              ? 0
-                              : Infinity,
-                          repeatType: 'loop',
-                        }}
-                      >
-                        <input
-                          type="text"
-                          inputMode="numeric"
-                          pattern="[0-9]*"
-                          placeholder="Score"
-                          value={
-                            scores[index] && scores[index][currentRound - 1]
-                              ? scores[index][currentRound - 1]
-                              : ''
-                          }
-                          onFocus={() => setFocusedInput(index)}
-                          onBlur={() => setFocusedInput(null)}
-                          onChange={(e) =>
-                            handleScoreChange(index, e.target.value)
-                          }
-                          onKeyPress={handleKeyPress}
-                          className={`w-20 h-14 rounded-full bg-white text-black focus:outline-none shadow-lg transition-all duration-300 ease-in-out text-center ${
-                            scores[index] && scores[index][currentRound - 1]
-                              ? 'border-4 border-green-500'
-                              : 'focus:ring-4 focus:ring-red-500'
-                          }`}
-                        />
-                      </motion.div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      <div className="min-h-screen flex flex-col bg-gradient-to-r from-blue to-purple-500">
+        <div className="max-w-md m-auto min-h-[600px] px-4 w-full flex flex-col">
+          <div className="flex justify-between h-16">
+            <button
+              className="w-1/4 h-full p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white rounded-lg shadow-lg transition-transform duration-300 mx-1"
+              onClick={handlePreviousRound}
+              disabled={currentRound === 1}
+            >
+              Previous
+            </button>
+            <h1 className="text-center text-white font-bold mx-1 text-3xl flex-grow h-full flex items-center justify-center">
+              Round {currentRound}
+            </h1>
+            <button
+              className="w-1/4 h-full p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white rounded-lg shadow-lg transition-transform duration-300 mx-1"
+              onClick={handleNextRound}
+              disabled={!canProceedToNextRound()}
+            >
+              Next
+            </button>
           </div>
-        </div>
-        <div className="flex justify-between mt-10 h-16">
-          <button
-            className="p-2 w-1/4 h-full bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-2xl transition-transform duration-300"
-            onClick={handleShowTotalScores}
+          <div
+            className="flex-grow flex items-center justify-center mt-4"
+            style={{ height: 'calc(100% - 64px - 64px - 32px)' }}
           >
-            Results
-          </button>
-          {showTotalScores && (
-            <TotalScores
-              playerNames={playerNames}
-              totalScores={totalScores}
-              onClose={handleCloseTotalScores}
-              gameMode={gameMode}
-            />
-          )}
-          <button
-            className="p-2 w-1/4 h-full bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-2xl transition-transform duration-300"
-            onClick={() => setShowSaveModal(true)}
-          >
-            Save Game
-          </button>
-          <button
-            className="p-2 w-1/4 h-full bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white rounded-lg shadow-2xl transition-transform duration-300"
-            onClick={handleEndGame}
-          >
-            End game
-          </button>
-        </div>
+            <div className="w-full flex flex-col justify-between">
+              <table className="w-3/4 m-auto">
+                <tbody
+                  className="flex flex-col justify-between"
+                  style={{ height: '100%' }}
+                >
+                  {playerNames.map((name, index) => (
+                    <tr
+                      key={index}
+                      className="text-white mb-4 flex justify-between items-center"
+                    >
+                      <td className="py-2 text-left text-2xl">{name}</td>
 
-        {showSaveModal && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
-            <div className="bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 p-6 rounded-lg shadow-lg relative w-4/5 max-w-80 min-h-[50%]">
-              <h2 className="text-lg font-bold mb-4 text-white">Save Game</h2>
-              <input
-                type="text"
-                placeholder="Game Name"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full p-2 mb-4 border rounded-lg"
-              />
-              <button
-                className="p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white rounded-lg shadow-lg transition-transform duration-300"
-                onClick={handleSaveGame}
-              >
-                Save
-              </button>
-              <button
-                className="p-2 bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white rounded-lg shadow-lg transition-transform duration-300 mt-4"
-                onClick={() => setShowSaveModal(false)}
-              >
-                Cancel
-              </button>
-              <p>
-                <i>
-                  Note that saved data will disappear if browser cookies are
-                  removed
-                </i>
-              </p>
+                      <td className="text-center p-2">
+                        <motion.div
+                          animate={{
+                            scale:
+                              scores[index] && scores[index][currentRound - 1]
+                                ? 1
+                                : focusedInput === index
+                                ? 1
+                                : [1, 1.1, 1],
+                          }}
+                          transition={{
+                            duration: 1,
+                            repeat:
+                              scores[index] && scores[index][currentRound - 1]
+                                ? 0
+                                : focusedInput === index
+                                ? 0
+                                : Infinity,
+                            repeatType: 'loop',
+                          }}
+                        >
+                          <input
+                            type="text"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
+                            placeholder="Score"
+                            value={
+                              scores[index] && scores[index][currentRound - 1]
+                                ? scores[index][currentRound - 1]
+                                : ''
+                            }
+                            onFocus={() => setFocusedInput(index)}
+                            onBlur={() => setFocusedInput(null)}
+                            onChange={(e) =>
+                              handleScoreChange(index, e.target.value)
+                            }
+                            onKeyPress={handleKeyPress}
+                            className={`w-20 h-14 rounded-full bg-white text-black focus:outline-none shadow-lg transition-all duration-300 ease-in-out text-center ${
+                              scores[index] && scores[index][currentRound - 1]
+                                ? 'border-4 border-green-500'
+                                : 'focus:ring-4 focus:ring-red-500'
+                            }`}
+                          />
+                        </motion.div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
-        )}
+          <div className="flex justify-between mt-4 h-16">
+            <button
+              className="p-2 w-1/4 h-full bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-2xl transition-transform duration-300"
+              onClick={handleShowTotalScores}
+            >
+              Results
+            </button>
+            {showTotalScores && (
+              <TotalScores
+                playerNames={playerNames}
+                totalScores={totalScores}
+                onClose={handleCloseTotalScores}
+                gameMode={gameMode}
+              />
+            )}
+            <button
+              className="p-2 w-1/4 h-full bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-2xl transition-transform duration-300"
+              onClick={() => setShowSaveModal(true)}
+            >
+              Save Game
+            </button>
+            <button
+              className="p-2 w-1/4 h-full bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white rounded-lg shadow-2xl transition-transform duration-300"
+              onClick={handleEndGame}
+            >
+              End game
+            </button>
+          </div>
+
+          {showSaveModal && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
+              <div className="bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 p-8 rounded-lg shadow-lg relative w-4/5 max-w-md">
+                <h2 className="text-lg font-bold mb-4 text-white">Save Game</h2>
+                <input
+                  type="text"
+                  placeholder="Game Name"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="w-full p-2 mb-6 border rounded-lg"
+                />
+                <p className=" text-white">
+                  <i>
+                    Note that saved data will disappear if browser cookies are
+                    removed
+                  </i>
+                </p>
+                <div className="flex justify-between mt-10 h-12">
+                  <button
+                    className="p-2 w-1/3 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-lg transition-transform duration-300"
+                    onClick={handleSaveGame}
+                  >
+                    Save
+                  </button>
+                  <button
+                    className="p-2 w-1/3 bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white rounded-lg shadow-lg transition-transform duration-300"
+                    onClick={() => setShowSaveModal(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     );
   } else {

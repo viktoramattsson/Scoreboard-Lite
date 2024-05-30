@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { FaTimes } from 'react-icons/fa';
 
 function TotalScores({ playerNames, totalScores, onClose, gameMode }) {
   const playersWithScores = playerNames.map((name, index) => ({
@@ -20,7 +21,7 @@ function TotalScores({ playerNames, totalScores, onClose, gameMode }) {
   const [revealCount, setRevealCount] = useState(0);
 
   const handleReveal = (e) => {
-    if (e.target.id !== 'close-button') {
+    if (!e.target.closest('#close-button')) {
       if (revealCount < reversedPlayersWithScores.length) {
         setRevealCount(revealCount + 1);
       }
@@ -34,7 +35,6 @@ function TotalScores({ playerNames, totalScores, onClose, gameMode }) {
     >
       <motion.div
         className="relative w-full max-w-md p-8 bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 border border-purple-900 rounded-xl shadow-2xl"
-        onClick={handleReveal}
         initial={{ rotate: 0 }}
         animate={{ rotate: revealCount * 1080 }}
         transition={{ type: 'spring', bounce: 0.5, duration: 1 }}
@@ -65,16 +65,14 @@ function TotalScores({ playerNames, totalScores, onClose, gameMode }) {
             </ul>
           )}
         </div>
-        <button
+        <FaTimes
           id="close-button"
-          className="p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-2xl transition-transform duration-300 mt-2"
+          className="absolute top-4 right-4 text-3xl cursor-pointer text-white"
           onClick={(e) => {
             e.stopPropagation();
             onClose();
           }}
-        >
-          Close
-        </button>
+        />
       </motion.div>
     </div>
   );
