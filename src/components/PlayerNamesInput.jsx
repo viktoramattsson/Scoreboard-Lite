@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 function PlayerNamesInput({ onSubmit }) {
-  const [currentNames, setCurrentNames] = useState(['', '']); // Start with two fields
+  const [currentNames, setCurrentNames] = useState(['', '']);
   const [selectedGameMode, setSelectedGameMode] = useState(null);
   const router = useRouter();
 
@@ -23,11 +23,11 @@ function PlayerNamesInput({ onSubmit }) {
   const handleSubmit = () => {
     const validNames = currentNames.filter((name) => name.trim() !== '');
     if (validNames.length > 0 && selectedGameMode) {
-      localStorage.setItem('playerNames', JSON.stringify(validNames)); // Save to localStorage
-      localStorage.setItem('gameMode', selectedGameMode); // Save game mode to localStorage
-      console.log('Saved player names to localStorage:', validNames); // Debug log
+      localStorage.setItem('playerNames', JSON.stringify(validNames));
+      localStorage.setItem('gameMode', selectedGameMode);
+      console.log('Saved player names to localStorage:', validNames);
       onSubmit(validNames, selectedGameMode);
-      setCurrentNames(['', '']); // Reset fields to initial state
+      setCurrentNames(['', '']);
     }
   };
 
@@ -36,7 +36,7 @@ function PlayerNamesInput({ onSubmit }) {
   };
 
   const handleCancel = () => {
-    router.push('/'); // Navigate back to the home page
+    router.push('/');
   };
 
   return (

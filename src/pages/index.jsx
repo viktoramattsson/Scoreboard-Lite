@@ -122,7 +122,7 @@ const Home = () => {
   };
 
   const handleCloseInstall = () => {
-    localStorage.setItem('installDismissed', 'true'); // Save the user's choice in localStorage
+    localStorage.setItem('installDismissed', 'true');
     setShowInstallModal(false);
   };
 
@@ -134,7 +134,6 @@ const Home = () => {
         animate={{ rotate: 1080 }}
         transition={{ type: 'spring', bounce: 0.5, duration: 1 }}
       >
-        {/* <img className="h-52 w-52" src="logo.png" alt="Scoreboard Lite Logo" /> */}
         <Image
           src="/Scoreboard-Lite/logo.png"
           alt="Scoreboard Lite Logo"
