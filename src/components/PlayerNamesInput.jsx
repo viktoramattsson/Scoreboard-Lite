@@ -1,17 +1,32 @@
 import React, { useState } from 'react';
 import { FaPlus, FaTimes } from 'react-icons/fa';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 
 function PlayerNamesInput({ onSubmit }) {
   const [currentNames, setCurrentNames] = useState(['', '']);
   const [selectedGameMode, setSelectedGameMode] = useState(null);
+  const [duplicateNameWarning, setDuplicateNameWarning] = useState('');
+
   const router = useRouter();
 
+  const capitalize = (name) => {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  };
+
   const handleInputChange = (index, value) => {
+    const capitalizedValue = capitalize(value);
     setCurrentNames((prevNames) => {
       const newNames = [...prevNames];
-      newNames[index] = value;
+      newNames[index] = capitalizedValue;
+
+      if (
+        newNames.some((name, idx) => name === capitalizedValue && idx !== index)
+      ) {
+        setDuplicateNameWarning('Name already registered.');
+      } else {
+        setDuplicateNameWarning('');
+      }
+
       return newNames;
     });
   };
@@ -21,8 +36,11 @@ function PlayerNamesInput({ onSubmit }) {
   };
 
   const handleSubmit = () => {
-    const validNames = currentNames.filter((name) => name.trim() !== '');
-    if (validNames.length > 0 && selectedGameMode) {
+    const validNames = currentNames
+      .filter((name) => name.trim() !== '')
+      .map((name) => capitalize(name));
+
+    if (validNames.length > 0 && selectedGameMode && !duplicateNameWarning) {
       localStorage.setItem('playerNames', JSON.stringify(validNames));
       localStorage.setItem('gameMode', selectedGameMode);
       console.log('Saved player names to localStorage:', validNames);
@@ -66,6 +84,11 @@ function PlayerNamesInput({ onSubmit }) {
             </div>
           ))}
         </div>
+        {duplicateNameWarning && (
+          <div className="text-red-500 text-sm mt-2">
+            {duplicateNameWarning}
+          </div>
+        )}
         <div className="flex justify-center mt-2">
           <FaPlus
             className="text-3xl text-white cursor-pointer transition-colors duration-300"

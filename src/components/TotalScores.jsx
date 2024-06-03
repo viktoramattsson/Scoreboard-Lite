@@ -22,8 +22,10 @@ function TotalScores({ playerNames, totalScores, onClose, gameMode }) {
 
   const handleReveal = (e) => {
     if (!e.target.closest('#close-button')) {
-      if (revealCount < reversedPlayersWithScores.length) {
+      if (revealCount < playersWithScores.length - 2) {
         setRevealCount(revealCount + 1);
+      } else if (revealCount === playersWithScores.length - 2) {
+        setRevealCount(revealCount + 2); // Reveal the last two players at once
       }
     }
   };
@@ -54,12 +56,17 @@ function TotalScores({ playerNames, totalScores, onClose, gameMode }) {
                   .map((player, index) => (
                     <li
                       key={player.name + index}
-                      className="mb-2 p-2 rounded-lg text-black text-2xl"
+                      className={`mb-2 p-2 rounded-lg text-black ${
+                        index === 0 ? 'text-3xl' : 'text-xl'
+                      }`}
                     >
                       <span className="font-bold text-2xl mr-2">
                         {playerNames.length - (revealCount - 1 - index)}.
                       </span>{' '}
-                      {player.name}: {player.score}
+                      {player.name}{' '}
+                      <span className="text-lg">
+                        <i>{player.score}p</i>
+                      </span>
                     </li>
                   ))}
             </ul>
