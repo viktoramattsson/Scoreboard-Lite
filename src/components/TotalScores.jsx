@@ -42,7 +42,9 @@ function TotalScores({ playerNames, totalScores, onClose, gameMode }) {
         transition={{ type: 'spring', bounce: 0.5, duration: 1 }}
       >
         <div className="absolute -top-4 left-4 bg-gradient-to-r from-purple-800 via-blue-700 to-indigo-900 px-4 py-1 rounded-full shadow-lg">
-          <h2 className="text-center text-white font-bold">Total Scores</h2>
+          <h2 className="text-center text-white font-bold drop-shadow-[0_2px_1.2px_rgba(0,0,0,1)]">
+            Total Scores
+          </h2>
         </div>
         <div className="mb-4 mt-6 text-center">
           {revealCount === 0 ? (
@@ -56,7 +58,7 @@ function TotalScores({ playerNames, totalScores, onClose, gameMode }) {
                   .map((player, index) => (
                     <li
                       key={player.name + index}
-                      className={`mb-2 p-2 rounded-lg text-black ${
+                      className={`mb-2 p-2 rounded-lg text-white drop-shadow-[0_2px_1.2px_rgba(0,0,0,1)] ${
                         index === 0 ? 'text-3xl' : 'text-xl'
                       }`}
                     >
@@ -74,7 +76,7 @@ function TotalScores({ playerNames, totalScores, onClose, gameMode }) {
         </div>
         <FaTimes
           id="close-button"
-          className="absolute top-4 right-4 text-3xl cursor-pointer text-white"
+          className="absolute top-4 right-4 text-3xl cursor-pointer text-white drop-shadow-[0_2px_1.2px_rgba(0,0,0,1)]"
           onClick={(e) => {
             e.stopPropagation();
             onClose();

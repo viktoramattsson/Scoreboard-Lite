@@ -142,9 +142,11 @@ const Home = () => {
           height={200}
         />
       </motion.div>
-      <div className="relative w-full max-w-md p-4 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 rounded-xl mx-auto">
-        <div className="absolute -top-4 left-4 bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-900 px-4 py-1 rounded-full shadow-lg">
-          <h1 className="text-center text-white font-bold">Scoreboard Lite</h1>
+      <div className="relative w-full max-w-md p-4  bg-gradient-to-r from-blue to-purple-500 border border-gray-500 rounded-xl mx-auto">
+        <div className="absolute -top-4 left-4 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-900 px-4 py-1 rounded-full shadow-lg">
+          <h1 className="text-center text-white font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+            Scoreboard Lite
+          </h1>
         </div>
         <ul className="my-20 text-center">
           <motion.li
@@ -153,7 +155,7 @@ const Home = () => {
             transition={{ type: 'spring', bounce: 0.5, duration: 0.5 }}
           >
             <Link href="/playRounds" passHref>
-              <div className="cursor-pointer flex items-center justify-center p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl mt-10 mb-4 mx-auto">
+              <div className="font-gluten text-xl cursor-pointer flex items-center justify-center p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] mt-10 mb-4 mx-auto">
                 Play Rounds
               </div>
             </Link>
@@ -164,7 +166,7 @@ const Home = () => {
             transition={{ type: 'spring', bounce: 0.8, duration: 0.8 }}
           >
             <button
-              className="block p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl mt-10 mb-4 mx-auto"
+              className="font-gluten text-xl block p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] mt-10 mb-4 mx-auto"
               onClick={() => setShowSavedGames(!showSavedGames)}
             >
               Saved Games
@@ -176,7 +178,7 @@ const Home = () => {
             transition={{ type: 'spring', bounce: 0.8, duration: 1 }}
           >
             <button
-              className="block p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm shadow-2xl mt-10 mb-4 mx-auto"
+              className=" font-belanosima text-2xl block p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] mt-10 mb-4 mx-auto"
               onClick={() => setShowFeedback(!showFeedback)}
             >
               Feedback

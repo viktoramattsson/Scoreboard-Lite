@@ -165,17 +165,17 @@ function PlayRounds() {
         <div className="max-w-md m-auto min-h-[500px] px-4 w-full flex flex-col">
           <div className="flex justify-between h-16">
             <button
-              className="w-1/4 h-full p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white rounded-lg shadow-lg transition-transform duration-300 mx-1"
+              className="w-1/4 h-full p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white rounded-lg shadow-lg transition-transform duration-300 mx-1 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]"
               onClick={handlePreviousRound}
               disabled={currentRound === 1}
             >
               Previous
             </button>
-            <h1 className="text-center text-white font-bold mx-1 text-3xl flex-grow h-full flex items-center justify-center">
+            <h1 className="text-center font-gluten text-white font-bold mx-1 text-3xl flex-grow h-full flex items-center justify-center drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
               Round {currentRound}
             </h1>
             <button
-              className="w-1/4 h-full p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white rounded-lg shadow-lg transition-transform duration-300 mx-1"
+              className="w-1/4 h-full p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white rounded-lg shadow-lg transition-transform duration-300 mx-1 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]"
               onClick={handleNextRound}
               disabled={!canProceedToNextRound()}
             >
@@ -197,9 +197,11 @@ function PlayRounds() {
                       key={index}
                       className="text-white mb-4 flex justify-between items-center"
                     >
-                      <td className="py-2 text-left text-2xl">{name}</td>
+                      <td className="py-2 text-left text-2xl drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+                        {name}
+                      </td>
 
-                      <td className="text-center p-2">
+                      <td className="text-center p-2 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
                         <motion.div
                           animate={{
                             scale:
@@ -252,7 +254,7 @@ function PlayRounds() {
           </div>
           <div className="flex justify-between mt-4 h-16">
             <button
-              className="p-2 w-1/4 h-full bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-2xl transition-transform duration-300"
+              className="p-2 w-1/4 h-full bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-2xl transition-transform duration-300 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]"
               onClick={handleShowTotalScores}
             >
               Results
@@ -266,13 +268,13 @@ function PlayRounds() {
               />
             )}
             <button
-              className="p-2 w-1/4 h-full bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-2xl transition-transform duration-300"
+              className="p-2 w-1/4 h-full bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-2xl transition-transform duration-300 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]"
               onClick={() => setShowSaveModal(true)}
             >
               Save Game
             </button>
             <button
-              className="p-2 w-1/4 h-full bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white rounded-lg shadow-2xl transition-transform duration-300"
+              className="p-2 w-1/4 h-full bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white rounded-lg shadow-2xl transition-transform duration-300 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]"
               onClick={handleEndGame}
             >
               End game

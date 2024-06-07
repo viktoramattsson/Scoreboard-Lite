@@ -1,7 +1,18 @@
 import { useEffect } from 'react';
 import '@/styles/globals.css';
 import Head from 'next/head';
+import { Source_Sans_3, Belanosima } from 'next/font/google';
 
+const sourceSans = Source_Sans_3({
+  subsets: ['latin'],
+  variable: '--font-source-sans',
+});
+
+const belanosima = Belanosima({
+  subsets: ['latin'],
+  weight: ['400', '600'],
+  variable: '--font-belanosima',
+});
 export default function App({ Component, pageProps }) {
   useEffect(() => {
     if ('serviceWorker' in navigator) {
@@ -27,7 +38,7 @@ export default function App({ Component, pageProps }) {
       <Head>
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>Scoreboard Lite</title>
-        <meta name="description" content="Best PWA app in the world!" />
+        <meta name="description" content="Scoreboard simplicity" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         {/*
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -118,7 +129,9 @@ export default function App({ Component, pageProps }) {
           href="/Scoreboard-Lite/favicon-16x16.png"
         />
       </Head>
-      <Component {...pageProps} />
+      <main className={belanosima.className}>
+        <Component {...pageProps} />
+      </main>
     </>
   );
 }
