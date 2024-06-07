@@ -88,6 +88,7 @@ const Home = () => {
     localStorage.setItem('scores', JSON.stringify(game.scores));
     localStorage.setItem('currentRound', game.currentRound);
     localStorage.setItem('gameMode', game.gameMode);
+    localStorage.setItem('isPlayingSavedGame', JSON.stringify(game.title));
     router.push('/playRounds');
   };
 

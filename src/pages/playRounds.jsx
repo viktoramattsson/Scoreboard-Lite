@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import PlayerNamesInput from '../components/PlayerNamesInput';
 import TotalScores from '../components/TotalScores';
+import SaveModal from '../components/SaveModal';
 import db from '../db';
 
 function PlayRounds() {
@@ -23,6 +24,7 @@ function PlayRounds() {
       const savedScores = localStorage.getItem('scores');
       const savedCurrentRound = localStorage.getItem('currentRound');
       const savedGameMode = localStorage.getItem('gameMode');
+      const savedTitle = localStorage.getItem('isPlayingSavedGame');
 
       if (savedPlayerNames) {
         const parsedNames = JSON.parse(savedPlayerNames);
@@ -43,6 +45,10 @@ function PlayRounds() {
 
       if (savedGameMode) {
         setGameMode(savedGameMode);
+      }
+
+      if (savedTitle) {
+        setTitle(JSON.parse(savedTitle));
       }
 
       setIsLoaded(true);
@@ -67,6 +73,7 @@ function PlayRounds() {
     setGameMode(gameMode);
     localStorage.setItem('playerNames', JSON.stringify(names));
     localStorage.setItem('gameMode', gameMode);
+    localStorage.setItem('isPlayingSavedGame', JSON.stringify(''));
   };
 
   const handleScoreChange = (playerIndex, value) => {
@@ -102,6 +109,7 @@ function PlayRounds() {
     localStorage.removeItem('scores');
     localStorage.removeItem('currentRound');
     localStorage.removeItem('gameMode');
+    localStorage.removeItem('isPlayingSavedGame');
     router.push('/');
   };
 
@@ -118,13 +126,23 @@ function PlayRounds() {
   };
 
   const handleSaveGame = async () => {
-    await db.games.add({
-      title,
-      playerNames,
-      scores,
-      currentRound,
-      gameMode,
-    });
+    const existingGame = await db.games.where('title').equals(title).first();
+    if (existingGame) {
+      await db.games.update(existingGame.id, {
+        playerNames,
+        scores,
+        currentRound,
+        gameMode,
+      });
+    } else {
+      await db.games.add({
+        title,
+        playerNames,
+        scores,
+        currentRound,
+        gameMode,
+      });
+    }
     setShowSaveModal(false);
   };
 
@@ -261,40 +279,13 @@ function PlayRounds() {
             </button>
           </div>
 
-          {showSaveModal && (
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
-              <div className="bg-gradient-to-r from-blue-300 via-blue-400 to-blue-500 p-8 rounded-lg shadow-lg relative w-4/5 max-w-md">
-                <h2 className="text-lg font-bold mb-4 text-white">Save Game</h2>
-                <input
-                  type="text"
-                  placeholder="Game Name"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  className="w-full p-2 mb-6 border rounded-lg"
-                />
-                <p className=" text-white">
-                  <i>
-                    Note that saved data will disappear if browser cookies are
-                    removed
-                  </i>
-                </p>
-                <div className="flex justify-between mt-10 h-12">
-                  <button
-                    className="p-2 w-1/3 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-lg transition-transform duration-300"
-                    onClick={handleSaveGame}
-                  >
-                    Save
-                  </button>
-                  <button
-                    className="p-2 w-1/3 bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white rounded-lg shadow-lg transition-transform duration-300"
-                    onClick={() => setShowSaveModal(false)}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
+          <SaveModal
+            isOpen={showSaveModal}
+            onClose={() => setShowSaveModal(false)}
+            onSave={handleSaveGame}
+            title={title}
+            setTitle={setTitle}
+          />
         </div>
       </div>
     );
