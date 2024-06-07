@@ -140,6 +140,7 @@ const Home = () => {
           alt="Scoreboard Lite Logo"
           width={200}
           height={200}
+          className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]"
         />
       </motion.div>
       <div className="relative w-full max-w-md p-4  bg-gradient-to-r from-blue to-purple-500 border border-gray-500 rounded-xl mx-auto">
