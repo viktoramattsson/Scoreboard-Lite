@@ -172,7 +172,6 @@ function PlayRounds() {
 
   const handleWinnerModalClose = () => {
     setIsWinnerModalOpen(false);
-    handleEndGame();
   };
 
   if (!isLoaded) {
@@ -313,13 +312,13 @@ function PlayRounds() {
         </div>
 
         {isWinnerModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg relative">
-              <h2 className="mb-4 text-center text-lg font-bold">
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70">
+            <div className="flex flex-col bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-900 py-10 px-14 rounded-lg shadow-2xl relative max-w-md mx-10 justify-center">
+              <h2 className="mb-10 text-center text-2xl font-bold text-white">
                 {winnerName} won the game!
               </h2>
               <button
-                className="w-full p-2 bg-blue-500 text-white rounded-lg shadow-lg"
+                className="w-1/2 h-16 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg shadow-lg transition-transform duration-300 self-center"
                 onClick={handleWinnerModalClose}
               >
                 OK

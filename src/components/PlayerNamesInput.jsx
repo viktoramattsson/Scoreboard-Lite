@@ -74,13 +74,13 @@ function PlayerNamesInput({ onSubmit }) {
   };
 
   return (
-    <div className="flex flex-col justify-between min-h-screen p-6 bg-gradient-to-tr from-cyan-900 via-cyan-600 to-cyan-200 overflow-auto">
-      <div className="relative w-full max-w-md p-4 pt-10 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 rounded-xl mt-10 mx-auto">
-        <FaTimes
-          className="absolute top-4 right-4 text-2xl text-white cursor-pointer"
-          onClick={handleCancel}
-        />
-        <div className="absolute -top-4 left-4 bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-900 px-4 py-1 rounded-full shadow-lg">
+    <div className="flex flex-col justify-between min-h-screen p-6 pt-10 bg-gradient-to-tr from-cyan-900 via-cyan-600 to-cyan-200 overflow-auto">
+      <FaTimes
+        className="absolute top-6 right-6 text-3xl text-white cursor-pointer drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]"
+        onClick={handleCancel}
+      />
+      <div className="relative w-full max-w-md p-4 pt-10 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 rounded-xl mt-10 mx-auto drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]">
+        <div className=" drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] absolute -top-4 left-4 bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-900 px-4 py-1 rounded-full shadow-lg">
           <h1 className="text-center text-white font-bold">Players</h1>
         </div>
         <div
@@ -91,7 +91,7 @@ function PlayerNamesInput({ onSubmit }) {
           {currentNames.map((name, index) => (
             <div key={index}>
               <input
-                className="w-full p-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-red-500 shadow-lg transition-all duration-300 ease-in-out"
+                className="w-full p-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-red-500 shadow-lg transition-all duration-300 ease-in-out drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]"
                 type="text"
                 placeholder="Enter Player Name"
                 value={name}
@@ -107,41 +107,41 @@ function PlayerNamesInput({ onSubmit }) {
         )}
         <div className="flex justify-center mt-2">
           <FaPlus
-            className="text-3xl text-white cursor-pointer transition-colors duration-300"
+            className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] text-3xl mt-4 text-white cursor-pointer transition-colors duration-300"
             onClick={handleAddField}
           />
         </div>
       </div>
-      <div className="relative w-full max-w-md p-4 pt-10 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 rounded-xl mt-10 mx-auto">
-        <div className="absolute -top-4 left-4 bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-900 px-3 py-1 rounded-full shadow-lg">
+      <div className="relative w-full max-w-md p-4 pt-10 bg-gradient-to-r from-blue to-purple-500 border border-gray-500 rounded-xl mt-10 mx-auto drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]">
+        <div className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] absolute -top-4 left-4 bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-900 px-3 py-1 rounded-full shadow-lg">
           <h2 className="text-white font-bold">Game mode</h2>
         </div>
         <div className="flex flex-col mt-2">
           <button
-            className={`p-2 mb-2 rounded-lg shadow-lg transition-transform duration-300 ${
+            className={`p-2 mb-4 rounded-lg text-lg drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] transition-transform duration-300 ${
               selectedGameMode === 'highest'
                 ? 'bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white'
-                : 'bg-white text-black'
+                : 'bg-gradient-to-r from-purple-600 via-purple-600 to-purple-800 text-white'
             }`}
             onClick={() => handleGameModeChange('highest')}
           >
             Highest Score Wins
           </button>
           <button
-            className={`p-2 mb-2 rounded-lg shadow-lg transition-transform duration-300 ${
+            className={`p-2 mb-4 rounded-lg text-lg drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] transition-transform duration-300 ${
               selectedGameMode === 'lowest'
-                ? 'bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white'
-                : 'bg-white text-black'
+                ? 'bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white'
+                : 'bg-gradient-to-r from-purple-600 via-purple-600 to-purple-800 text-white'
             }`}
             onClick={() => handleGameModeChange('lowest')}
           >
             Lowest Score Wins
           </button>
           <button
-            className={`p-2 rounded-lg shadow-lg transition-transform duration-300 ${
+            className={`p-2 rounded-lg text-lg drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] transition-transform duration-300 ${
               selectedGameMode === 'firstTo'
-                ? 'bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 text-white'
-                : 'bg-white text-black'
+                ? 'bg-gradient-to-r from-green-500 via-green-600 to-green-900 text-white'
+                : 'bg-gradient-to-r from-purple-600 via-purple-600 to-purple-800 text-white'
             }`}
             onClick={() => handleGameModeChange('firstTo')}
           >
@@ -157,24 +157,32 @@ function PlayerNamesInput({ onSubmit }) {
       </button>
 
       {isXModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg relative">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70">
+          <div className="flex flex-col bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-900 py-10 rounded-lg shadow-2xl relative max-w-md mx-10 px-14 justify-center">
             <FaTimes
-              className="absolute top-2 right-2 text-2xl text-black cursor-pointer"
+              className="absolute top-4 right-4 text-3xl text-white cursor-pointer"
               onClick={handleXModalClose}
             />
-            <h2 className="mb-4 text-center text-lg font-bold">
+            <h2 className="mb-4 text-center text-2xl font-bold text-white">
               Enter Target Score
             </h2>
+            <p className="text-center text-white mb-10">
+              The player who reaches the target score first wins
+            </p>
             <input
-              type="number"
-              className="w-full p-2 mb-4 border rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-500"
+              type="text"
+              className="text-3xl text-center w-1/2 p-2 mb-10 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-500 self-center"
               value={targetScore}
               onChange={(e) => setTargetScore(e.target.value)}
             />
             <button
-              className="w-full p-2 bg-blue-500 text-white rounded-lg shadow-lg"
+              className={`w-1/2 h-16 ${
+                targetScore
+                  ? 'bg-gradient-to-r from-green-500 via-green-600 to-green-700'
+                  : 'bg-gray-400'
+              } text-white rounded-lg shadow-lg transition-transform duration-300 self-center`}
               onClick={handleXModalSubmit}
+              disabled={!targetScore}
             >
               OK
             </button>

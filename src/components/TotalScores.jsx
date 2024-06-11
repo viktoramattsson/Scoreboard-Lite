@@ -9,7 +9,7 @@ function TotalScores({ playerNames, totalScores, onClose, gameMode }) {
   }));
 
   playersWithScores.sort((a, b) => {
-    if (gameMode === 'highest') {
+    if (gameMode === 'highest' || gameMode === 'firstTo') {
       return b.score - a.score;
     } else {
       return a.score - b.score;
@@ -62,7 +62,7 @@ function TotalScores({ playerNames, totalScores, onClose, gameMode }) {
                         index === 0 ? 'text-3xl' : 'text-xl'
                       }`}
                     >
-                      <span className="font-bold text-2xl mr-2">
+                      <span className="font-bold text-3xl mr-2">
                         {playerNames.length - (revealCount - 1 - index)}.
                       </span>{' '}
                       {player.name}{' '}

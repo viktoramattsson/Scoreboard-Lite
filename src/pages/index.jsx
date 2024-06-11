@@ -156,7 +156,7 @@ const Home = () => {
             transition={{ type: 'spring', bounce: 0.5, duration: 0.5 }}
           >
             <Link href="/playRounds" passHref>
-              <div className="font-gluten text-xl cursor-pointer flex items-center justify-center p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] mt-10 mb-4 mx-auto">
+              <div className="font-gluten text-2xl cursor-pointer flex items-center justify-center p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] mt-10 mb-4 mx-auto">
                 Play Rounds
               </div>
             </Link>
@@ -167,7 +167,7 @@ const Home = () => {
             transition={{ type: 'spring', bounce: 0.8, duration: 0.8 }}
           >
             <button
-              className="font-gluten text-xl block p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] mt-10 mb-4 mx-auto"
+              className="font-gluten text-2xl block p-2 bg-gradient-to-r from-green-500 via-green-600 to-green-700 text-white rounded-lg h-16 w-2/3 max-w-sm drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] mt-10 mb-4 mx-auto"
               onClick={() => setShowSavedGames(!showSavedGames)}
             >
               Saved Games
