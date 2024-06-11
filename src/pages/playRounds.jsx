@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import PlayerNamesInput from '../components/PlayerNamesInput';
@@ -15,6 +15,8 @@ function PlayRounds() {
   const [title, setTitle] = useState('');
   const [gameMode, setGameMode] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isWinnerModalOpen, setIsWinnerModalOpen] = useState(false);
+  const [winnerName, setWinnerName] = useState('');
   const router = useRouter();
   const [focusedInput, setFocusedInput] = useState(null);
 
@@ -67,6 +69,26 @@ function PlayRounds() {
     }
   }, [currentRound, isLoaded]);
 
+  const calculateTotalScores = useCallback(() => {
+    return scores.map((playerScores) =>
+      playerScores.reduce((total, score) => total + (parseInt(score) || 0), 0)
+    );
+  }, [scores]);
+
+  useEffect(() => {
+    const targetScore = localStorage.getItem('targetScore');
+    if (targetScore) {
+      const totalScores = calculateTotalScores();
+      const winnerIndex = totalScores.findIndex(
+        (score) => score >= parseInt(targetScore)
+      );
+      if (winnerIndex !== -1) {
+        setWinnerName(playerNames[winnerIndex]);
+        setIsWinnerModalOpen(true);
+      }
+    }
+  }, [scores, calculateTotalScores, playerNames]);
+
   const handlePlayerNamesSubmit = (names, gameMode) => {
     setPlayerNames(names);
     setScores(names.map(() => []));
@@ -110,13 +132,8 @@ function PlayRounds() {
     localStorage.removeItem('currentRound');
     localStorage.removeItem('gameMode');
     localStorage.removeItem('isPlayingSavedGame');
+    localStorage.removeItem('targetScore');
     router.push('/');
-  };
-
-  const calculateTotalScores = () => {
-    return scores.map((playerScores) =>
-      playerScores.reduce((total, score) => total + (parseInt(score) || 0), 0)
-    );
   };
 
   const canProceedToNextRound = () => {
@@ -151,6 +168,11 @@ function PlayRounds() {
     if (charCode < 48 || charCode > 57) {
       e.preventDefault();
     }
+  };
+
+  const handleWinnerModalClose = () => {
+    setIsWinnerModalOpen(false);
+    handleEndGame();
   };
 
   if (!isLoaded) {
@@ -289,6 +311,22 @@ function PlayRounds() {
             setTitle={setTitle}
           />
         </div>
+
+        {isWinnerModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg relative">
+              <h2 className="mb-4 text-center text-lg font-bold">
+                {winnerName} won the game!
+              </h2>
+              <button
+                className="w-full p-2 bg-blue-500 text-white rounded-lg shadow-lg"
+                onClick={handleWinnerModalClose}
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     );
   } else {

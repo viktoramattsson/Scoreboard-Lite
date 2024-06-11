@@ -6,6 +6,8 @@ function PlayerNamesInput({ onSubmit }) {
   const [currentNames, setCurrentNames] = useState(['', '']);
   const [selectedGameMode, setSelectedGameMode] = useState(null);
   const [duplicateNameWarning, setDuplicateNameWarning] = useState('');
+  const [isXModalOpen, setIsXModalOpen] = useState(false);
+  const [targetScore, setTargetScore] = useState('');
 
   const router = useRouter();
 
@@ -43,6 +45,9 @@ function PlayerNamesInput({ onSubmit }) {
     if (validNames.length > 0 && selectedGameMode && !duplicateNameWarning) {
       localStorage.setItem('playerNames', JSON.stringify(validNames));
       localStorage.setItem('gameMode', selectedGameMode);
+      if (selectedGameMode === 'firstTo' && targetScore) {
+        localStorage.setItem('targetScore', targetScore);
+      }
       console.log('Saved player names to localStorage:', validNames);
       onSubmit(validNames, selectedGameMode);
       setCurrentNames(['', '']);
@@ -51,6 +56,17 @@ function PlayerNamesInput({ onSubmit }) {
 
   const handleGameModeChange = (mode) => {
     setSelectedGameMode(mode);
+    if (mode === 'firstTo') {
+      setIsXModalOpen(true);
+    }
+  };
+
+  const handleXModalClose = () => {
+    setIsXModalOpen(false);
+  };
+
+  const handleXModalSubmit = () => {
+    setIsXModalOpen(false);
   };
 
   const handleCancel = () => {
@@ -139,6 +155,32 @@ function PlayerNamesInput({ onSubmit }) {
       >
         Start!
       </button>
+
+      {isXModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg relative">
+            <FaTimes
+              className="absolute top-2 right-2 text-2xl text-black cursor-pointer"
+              onClick={handleXModalClose}
+            />
+            <h2 className="mb-4 text-center text-lg font-bold">
+              Enter Target Score
+            </h2>
+            <input
+              type="number"
+              className="w-full p-2 mb-4 border rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-500"
+              value={targetScore}
+              onChange={(e) => setTargetScore(e.target.value)}
+            />
+            <button
+              className="w-full p-2 bg-blue-500 text-white rounded-lg shadow-lg"
+              onClick={handleXModalSubmit}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
